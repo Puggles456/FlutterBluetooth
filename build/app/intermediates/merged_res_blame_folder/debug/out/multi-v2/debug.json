@@ -835,7 +835,7 @@
                     }
                 },
                 {
-                    "source": "C:\\programming\\Flutter_Projects\\test\\test\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "C:\\programming\\Flutter_Projects\\test2\\android\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -871,7 +871,24 @@
                     }
                 },
                 {
-                    "source": "C:\\programming\\Flutter_Projects\\test\\test\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "C:\\Users\\ben.farmer\\.gradle\\caches\\transforms-3\\4ba20fbb50793ba1cd3d50af04c40a3f\\transformed\\browser-1.5.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,113,179,242,304,375,447,515,582,661",
+                        "endColumns": "57,65,62,61,70,71,67,66,78,68",
+                        "endOffsets": "108,174,237,299,370,442,510,577,656,725"
+                    },
+                    "to": {
+                        "startLines": "13,14,15,16,21,22,109,110,111,112",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "611,669,735,798,1123,1194,6520,6588,6655,6734",
+                        "endColumns": "57,65,62,61,70,71,67,66,78,68",
+                        "endOffsets": "664,730,793,855,1189,1261,6583,6650,6729,6798"
+                    }
+                },
+                {
+                    "source": "C:\\programming\\Flutter_Projects\\test2\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
@@ -887,23 +904,6 @@
                         "endLines": "117,120",
                         "endColumns": "12,12",
                         "endOffsets": "7050,7219"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ben.farmer\\.gradle\\caches\\transforms-3\\4ba20fbb50793ba1cd3d50af04c40a3f\\transformed\\browser-1.5.0\\res\\values\\values.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,113,179,242,304,375,447,515,582,661",
-                        "endColumns": "57,65,62,61,70,71,67,66,78,68",
-                        "endOffsets": "108,174,237,299,370,442,510,577,656,725"
-                    },
-                    "to": {
-                        "startLines": "13,14,15,16,21,22,109,110,111,112",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "611,669,735,798,1123,1194,6520,6588,6655,6734",
-                        "endColumns": "57,65,62,61,70,71,67,66,78,68",
-                        "endOffsets": "664,730,793,855,1189,1261,6583,6650,6729,6798"
                     }
                 }
             ]
@@ -1458,7 +1458,7 @@
             "outputFile": "com.mycompany.test.app-merged_res-13:/values-night-v31_values-night-v31.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\programming\\Flutter_Projects\\test\\test\\android\\app\\src\\main\\res\\values-night-v31\\styles.xml",
+                    "source": "C:\\programming\\Flutter_Projects\\test2\\android\\app\\src\\main\\res\\values-night-v31\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
@@ -1521,7 +1521,7 @@
             "outputFile": "com.mycompany.test.app-merged_res-13:/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\programming\\Flutter_Projects\\test\\test\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "C:\\programming\\Flutter_Projects\\test2\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
@@ -1662,7 +1662,7 @@
             "outputFile": "com.mycompany.test.app-merged_res-13:/values-v31_values-v31.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\programming\\Flutter_Projects\\test\\test\\android\\app\\src\\main\\res\\values-v31\\styles.xml",
+                    "source": "C:\\programming\\Flutter_Projects\\test2\\android\\app\\src\\main\\res\\values-v31\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

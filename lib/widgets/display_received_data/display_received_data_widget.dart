@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'display_received_data_model.dart';
 export 'display_received_data_model.dart';
+import 'dart:typed_data';
 import 'dart:async';
 
 class DisplayReceivedDataWidget extends StatefulWidget {
@@ -15,6 +16,7 @@ class DisplayReceivedDataWidget extends StatefulWidget {
   });
 
   final BTDeviceStruct? device;
+  
 
   @override
   State<DisplayReceivedDataWidget> createState() =>
@@ -23,8 +25,13 @@ class DisplayReceivedDataWidget extends StatefulWidget {
 
 class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
   late DisplayReceivedDataModel _model;
-  late StreamSubscription<String> _dataSubscription;
-  final StreamController<String> _dataStreamController = StreamController<String>.broadcast();
+  late StreamSubscription<Uint8List> _dataSubscription;
+  final StreamController<Uint8List> _dataStreamController = StreamController<Uint8List>.broadcast();
+  //final StreamController<Uint8List> _dataStreamController = StreamController<Uint8List>().broadcast();
+  int totalUncompressedSize = 0;
+  double _speed = 0.0;
+  int _totalSize = 0;
+  int _uncompressedSize = 0;
 
   @override
   void setState(VoidCallback callback) {
@@ -48,8 +55,15 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
 
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
+         final hexString = dataToHexString(data);
+        final uncompressedData = parseCompressedData(data);
+        final uncompressedSize = uncompressedData.length;
+       
+       
         setState(() {
-          _model.data = data;
+           _totalSize += uncompressedData.length;
+          int temp = (_totalSize / 1024).toInt();
+          _model.data = temp.toString();
         });
       });
     }
@@ -82,8 +96,8 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
           child: Text(
             valueOrDefault<String>(
-              _model.data,
-              '-',
+              "Total data Size: ${_model.data} KB",
+              'Total Data Size: ',
             ),
             style: FlutterFlowTheme.of(context).bodyLarge.override(
                   fontFamily: 'Montserrat',
@@ -95,4 +109,76 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
       ],
     );
   }
+   
+}
+ String dataToHexString(Uint8List data) {
+    return data.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
+  }
+Uint8List hexStringToByteArray(String hexString) {
+  final bytes = <int>[];
+  for (int i = 0; i < hexString.length; i += 2) {
+    final byte = int.parse(hexString.substring(i, i + 2), radix: 16);
+    bytes.add(byte);
+  }
+  return Uint8List.fromList(bytes);
+}
+Uint8List parseCompressedData(Uint8List compressedData) {
+  const entrySize = 14; // Size of the compressed entry
+  final numberOfEntries = compressedData.length ~/ entrySize;
+  final buffer = BytesBuilder();
+
+  for (int i = 0; i < numberOfEntries; i++) {
+    final compressedEntry = compressedData.sublist(i * entrySize, (i + 1) * entrySize);
+    final reconstructedEntry = reconstructEntry(compressedEntry);
+    buffer.add(reconstructedEntry);
+  }
+
+  return buffer.toBytes();
+}
+
+Uint8List reconstructEntry(Uint8List compressedEntry) {
+  final buffer = BytesBuilder();
+
+  // Fill static values
+  final recordSize = ByteData(2)..setUint16(0, 0x20, Endian.little);
+  buffer.add(recordSize.buffer.asUint8List()); // Record Size
+  buffer.add([0x04]); // Record Type
+  final recordNumber = ByteData(2)..setUint16(0, 0x00, Endian.little);
+  buffer.add(recordNumber.buffer.asUint8List()); // Record Number
+  buffer.add([0x02]); // Sensor ID
+
+  // Epoch timestamp
+  final epochTime = ByteData.sublistView(compressedEntry, 0, 4).getUint32(0, Endian.little) * 1000;
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(epochTime, isUtc: true);
+  buffer.add([dateTime.year - 2000]);
+  buffer.add([dateTime.month]);
+  buffer.add([dateTime.day]);
+  buffer.add([dateTime.hour]);
+  buffer.add([dateTime.minute]);
+  buffer.add([dateTime.second]);
+
+  buffer.add([0x00]); // Empty byte
+  buffer.add([compressedEntry[4]]); // Target Duration
+
+  final directionAndClass = compressedEntry[5];
+  buffer.add([directionAndClass & 0x01]); // Target Direction
+  buffer.add([(directionAndClass & 0x06) >> 1]); // Track Type
+  buffer.add([(directionAndClass & 0xF8) >> 3]); // Target Class
+
+  buffer.add(ByteData.sublistView(compressedEntry, 6, 8).buffer.asUint16List(0, 1).buffer.asUint8List()); // Average Speed
+  buffer.add(ByteData.sublistView(compressedEntry, 8, 10).buffer.asUint16List(0, 1).buffer.asUint8List()); // Peak Speed
+  buffer.add(ByteData.sublistView(compressedEntry, 10, 12).buffer.asUint16List(0, 1).buffer.asUint8List()); // Last Speed
+
+  buffer.add([compressedEntry[12]]); // Target Strength
+  buffer.add([0x00]); // Lane
+  buffer.add([compressedEntry[13]]); // Event Code
+  buffer.add([0x00]); // Quality Measure
+  buffer.add([0x00]); // Empty Byte
+
+  // CRC placeholder (You may need to calculate the actual CRC)
+  final byteData = ByteData(2)..setUint16(0, 0x0000, Endian.little);
+  buffer.add(byteData.buffer.asUint8List());
+ 
+
+  return buffer.toBytes();
 }
