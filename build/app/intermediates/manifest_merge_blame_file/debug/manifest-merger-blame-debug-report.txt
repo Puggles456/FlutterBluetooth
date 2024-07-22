@@ -1,0 +1,177 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mycompany.test"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="34" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:4:5-66
+14-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:4:22-64
+15    <uses-permission android:name="android.permission.BLUETOOTH" />
+15-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:6:5-68
+15-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:6:22-65
+16    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+16-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:7:5-73
+16-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:7:22-71
+17    <!--
+18         New Bluetooth permissions in Android 12
+19           https://developer.android.com/about/versions/12/features/bluetooth-permissions
+20    -->
+21    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+21-->[:flutter_blue_plus] C:\programming\Flutter_Projects\test\test\build\flutter_blue_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:13:5-73
+21-->[:flutter_blue_plus] C:\programming\Flutter_Projects\test\test\build\flutter_blue_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:13:22-70
+22    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+22-->[:flutter_blue_plus] C:\programming\Flutter_Projects\test\test\build\flutter_blue_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:14:5-76
+22-->[:flutter_blue_plus] C:\programming\Flutter_Projects\test\test\build\flutter_blue_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:14:22-73
+23    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+23-->[:flutter_blue_plus] C:\programming\Flutter_Projects\test\test\build\flutter_blue_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:19:5-79
+23-->[:flutter_blue_plus] C:\programming\Flutter_Projects\test\test\build\flutter_blue_plus\intermediates\merged_manifest\debug\AndroidManifest.xml:19:22-76
+24
+25    <permission
+25-->[androidx.core:core:1.10.1] C:\Users\ben.farmer\.gradle\caches\transforms-3\e4f41c42c00a92799a5890ed5f8f659f\transformed\core-1.10.1\AndroidManifest.xml:22:5-24:47
+26        android:name="com.mycompany.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+26-->[androidx.core:core:1.10.1] C:\Users\ben.farmer\.gradle\caches\transforms-3\e4f41c42c00a92799a5890ed5f8f659f\transformed\core-1.10.1\AndroidManifest.xml:23:9-81
+27        android:protectionLevel="signature" />
+27-->[androidx.core:core:1.10.1] C:\Users\ben.farmer\.gradle\caches\transforms-3\e4f41c42c00a92799a5890ed5f8f659f\transformed\core-1.10.1\AndroidManifest.xml:24:9-44
+28
+29    <uses-permission android:name="com.mycompany.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+29-->[androidx.core:core:1.10.1] C:\Users\ben.farmer\.gradle\caches\transforms-3\e4f41c42c00a92799a5890ed5f8f659f\transformed\core-1.10.1\AndroidManifest.xml:26:5-97
+29-->[androidx.core:core:1.10.1] C:\Users\ben.farmer\.gradle\caches\transforms-3\e4f41c42c00a92799a5890ed5f8f659f\transformed\core-1.10.1\AndroidManifest.xml:26:22-94
+30
+31    <application
+31-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:8:5-62:19
+32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+32-->[androidx.core:core:1.10.1] C:\Users\ben.farmer\.gradle\caches\transforms-3\e4f41c42c00a92799a5890ed5f8f659f\transformed\core-1.10.1\AndroidManifest.xml:28:18-86
+33        android:debuggable="true"
+34        android:icon="@mipmap/ic_launcher"
+34-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:11:9-43
+35        android:label="Bluetooth Demo"
+35-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:9:9-39
+36        android:requestLegacyExternalStorage="true" >
+36-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:12:9-52
+37        <activity
+37-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:14:9-52:20
+38            android:name="com.mycompany.test.MainActivity"
+38-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:15:13-41
+39            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+39-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:19:13-163
+40            android:exported="true"
+40-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:16:13-36
+41            android:hardwareAccelerated="true"
+41-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:20:13-47
+42            android:launchMode="singleTop"
+42-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:17:13-43
+43            android:theme="@style/LaunchTheme"
+43-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:18:13-47
+44            android:windowSoftInputMode="adjustResize" >
+44-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:21:13-55
+45
+46            <!--
+47                 Specifies an Android theme to apply to this Activity as soon as
+48                 the Android process has started. This theme is visible to the user
+49                 while the Flutter UI initializes. After that, this theme continues
+50                 to determine the Window background behind the Flutter UI.
+51            -->
+52            <meta-data
+52-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:26:13-29:17
+53                android:name="io.flutter.embedding.android.NormalTheme"
+53-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:27:15-70
+54                android:resource="@style/NormalTheme" />
+54-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:28:15-52
+55            <!--
+56                 Displays an Android View that continues showing the launch screen
+57                 Drawable until Flutter paints its first frame, then this splash
+58                 screen fades out. A splash screen is useful to avoid any visual
+59                 gap between the end of Android's launch screen and the painting of
+60                 Flutter's first frame.
+61            -->
+62            <meta-data
+62-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:35:13-38:17
+63                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+63-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:36:15-79
+64                android:resource="@drawable/launch_background" />
+64-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:37:15-61
+65
+66            <intent-filter>
+66-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:39:13-42:29
+67                <action android:name="android.intent.action.MAIN" />
+67-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:40:17-68
+67-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:40:25-66
+68
+69                <category android:name="android.intent.category.LAUNCHER" />
+69-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:41:17-76
+69-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:41:27-74
+70            </intent-filter>
+71            <!-- Deep linking -->
+72            <meta-data
+72-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:44:13-90
+73                android:name="flutter_deeplinking_enabled"
+73-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:44:24-66
+74                android:value="true" />
+74-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:44:67-87
+75
+76            <intent-filter android:autoVerify="true" >
+76-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:45:13-50:29
+76-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:45:28-53
+77                <action android:name="android.intent.action.VIEW" />
+77-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:46:17-69
+77-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:46:25-66
+78
+79                <category android:name="android.intent.category.DEFAULT" />
+79-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:47:17-76
+79-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:47:27-73
+80                <category android:name="android.intent.category.BROWSABLE" />
+80-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:48:17-78
+80-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:48:27-75
+81
+82                <data
+82-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:49:17-71
+83                    android:host="test.com"
+83-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:49:45-68
+84                    android:scheme="test" />
+84-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:49:23-44
+85            </intent-filter>
+86        </activity>
+87
+88        <!--
+89             Don't delete the meta-data below.
+90             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+91        -->
+92        <meta-data
+92-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:56:9-58:33
+93            android:name="flutterEmbedding"
+93-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:57:13-44
+94            android:value="2" />
+94-->C:\programming\Flutter_Projects\test\test\android\app\src\main\AndroidManifest.xml:58:13-30
+95
+96        <activity
+96-->[:url_launcher_android] C:\programming\Flutter_Projects\test\test\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-13:74
+97            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+97-->[:url_launcher_android] C:\programming\Flutter_Projects\test\test\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
+98            android:exported="false"
+98-->[:url_launcher_android] C:\programming\Flutter_Projects\test\test\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
+99            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+99-->[:url_launcher_android] C:\programming\Flutter_Projects\test\test\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-71
+100
+101        <uses-library
+101-->[androidx.window:window:1.0.0-beta04] C:\Users\ben.farmer\.gradle\caches\transforms-3\11e656656b149d11d4f6a7d150c56188\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+102            android:name="androidx.window.extensions"
+102-->[androidx.window:window:1.0.0-beta04] C:\Users\ben.farmer\.gradle\caches\transforms-3\11e656656b149d11d4f6a7d150c56188\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+103            android:required="false" />
+103-->[androidx.window:window:1.0.0-beta04] C:\Users\ben.farmer\.gradle\caches\transforms-3\11e656656b149d11d4f6a7d150c56188\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+104        <uses-library
+104-->[androidx.window:window:1.0.0-beta04] C:\Users\ben.farmer\.gradle\caches\transforms-3\11e656656b149d11d4f6a7d150c56188\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+105            android:name="androidx.window.sidecar"
+105-->[androidx.window:window:1.0.0-beta04] C:\Users\ben.farmer\.gradle\caches\transforms-3\11e656656b149d11d4f6a7d150c56188\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+106            android:required="false" />
+106-->[androidx.window:window:1.0.0-beta04] C:\Users\ben.farmer\.gradle\caches\transforms-3\11e656656b149d11d4f6a7d150c56188\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+107    </application>
+108
+109</manifest>
