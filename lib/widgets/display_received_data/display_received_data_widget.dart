@@ -130,7 +130,7 @@ Uint8List parseCompressedData(Uint8List compressedData) {
 Uint8List reconstructEntry(Uint8List compressedEntry) {
   final buffer = BytesBuilder();
 
- // print("BUILDING OUR COMPRESSION ENTRY");
+  //print("BUILDING OUR COMPRESSION ENTRY");
 
   // Fill static values
   buffer.add(Uint8List.fromList([
@@ -159,27 +159,38 @@ Uint8List reconstructEntry(Uint8List compressedEntry) {
   buffer.add([0x00]); // Empty byte
   buffer.add([compressedEntry[4]]); // Target Duration
 
-  print("SIZE AFTER ADDING STATIC VALUES 3 ${buffer.length}");
+ // print("SIZE AFTER ADDING STATIC VALUES 3 ${buffer.length}");
 
   final directionAndClass = compressedEntry[5];
   buffer.add([directionAndClass & 0x01]); // Target Direction
   buffer.add([(directionAndClass >> 1) & 0x03]); // Track Type
   buffer.add([(directionAndClass >> 3) & 0x1F]); // Target Class
 
-  //print("SIZE AFTER ADDING STATIC VALUES 4 ${buffer.length}");
+ // print("SIZE AFTER ADDING STATIC VALUES 4 ${buffer.length}");
+
+  buffer.add(Uint8List.fromList([0x00, 0x00]));//Contact ID
 
   // Speed fields
-  ByteData byteData = ByteData.sublistView(Uint8List.fromList(compressedEntry), 6, 8);
-  ByteData byteData2 = ByteData.sublistView(Uint8List.fromList(compressedEntry), 8, 10);
-  ByteData byteData3 = ByteData.sublistView(Uint8List.fromList(compressedEntry), 10, 12);
+ ByteData byteData = ByteData.sublistView(compressedEntry, 6, 8);
+  ByteData byteData2 = ByteData.sublistView(compressedEntry, 8, 10);
+  ByteData byteData3 = ByteData.sublistView(compressedEntry, 10, 12);
   int averageSpeed = byteData.getInt16(0, Endian.little);
   int peakSpeed = byteData2.getInt16(0, Endian.little);
   int lastSpeed = byteData3.getInt16(0, Endian.little);
- // buffer.add([averageSpeed]);
- // buffer.add([peakSpeed]);
-  buffer.add([lastSpeed]);
 
- // print("SIZE AFTER ADDING STATIC VALUES 5 ${buffer.length}");
+  buffer.add(Uint8List.fromList([
+    averageSpeed & 0xFF, (averageSpeed >> 8) & 0xFF
+  ])); // Average Speed
+  
+  buffer.add(Uint8List.fromList([
+    peakSpeed & 0xFF, (peakSpeed >> 8) & 0xFF
+  ])); // Peak Speed
+  
+  buffer.add(Uint8List.fromList([
+    lastSpeed & 0xFF, (lastSpeed >> 8) & 0xFF
+  ])); // Last Speed
+
+  //print("SIZE AFTER ADDING STATIC VALUES 5 ${buffer.length}");
 
 
   buffer.add([compressedEntry[12]]); // Target Strength
@@ -188,12 +199,12 @@ Uint8List reconstructEntry(Uint8List compressedEntry) {
   buffer.add([0x00]); // Quality Measure
   buffer.add([0x00]); // Empty Byte
 
- // print("SIZE AFTER ADDING STATIC VALUES 6 ${buffer.length}");
+  //print("SIZE AFTER ADDING STATIC VALUES 6 ${buffer.length}");
 
   // CRC placeholder
   buffer.add(Uint8List.fromList([0x00, 0x00]));
 
-   //print("RECONSTRUCTED SIZE ${buffer.length}");
+  //print("RECONSTRUCTED SIZE ${buffer.length}");
 
   return buffer.toBytes();
 }
