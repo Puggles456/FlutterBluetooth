@@ -55,13 +55,14 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
 
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
-         final hexString = dataToHexString(data);
+        // final hexString = dataToHexString(data);
         final uncompressedData = parseCompressedData(data);
         final uncompressedSize = uncompressedData.length;
        
        
         setState(() {
-           _totalSize += uncompressedData.length;
+           _totalSize += uncompressedSize;
+           //_totalSize += data.length;
           int temp = (_totalSize / 1024).toInt();
           _model.data = temp.toString();
         });
@@ -111,17 +112,7 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
   }
    
 }
- String dataToHexString(Uint8List data) {
-    return data.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
-  }
-Uint8List hexStringToByteArray(String hexString) {
-  final bytes = <int>[];
-  for (int i = 0; i < hexString.length; i += 2) {
-    final byte = int.parse(hexString.substring(i, i + 2), radix: 16);
-    bytes.add(byte);
-  }
-  return Uint8List.fromList(bytes);
-}
+ 
 Uint8List parseCompressedData(Uint8List compressedData) {
   const entrySize = 14; // Size of the compressed entry
   final numberOfEntries = compressedData.length ~/ entrySize;
@@ -139,35 +130,57 @@ Uint8List parseCompressedData(Uint8List compressedData) {
 Uint8List reconstructEntry(Uint8List compressedEntry) {
   final buffer = BytesBuilder();
 
+ // print("BUILDING OUR COMPRESSION ENTRY");
+
   // Fill static values
-  final recordSize = ByteData(2)..setUint16(0, 0x20, Endian.little);
-  buffer.add(recordSize.buffer.asUint8List()); // Record Size
-  buffer.add([0x04]); // Record Type
-  final recordNumber = ByteData(2)..setUint16(0, 0x00, Endian.little);
-  buffer.add(recordNumber.buffer.asUint8List()); // Record Number
-  buffer.add([0x02]); // Sensor ID
+  buffer.add(Uint8List.fromList([
+    0x20, 0x00, // Record Size
+    0x04,       // Record Type
+    0x00, 0x00, // Record Number
+    0x02        // Sensor ID
+  ]));
+
+  //print("SIZE AFTER ADDING STATIC VALUES 1 ${buffer.length}");  
 
   // Epoch timestamp
-  final epochTime = ByteData.sublistView(compressedEntry, 0, 4).getUint32(0, Endian.little) * 1000;
-  final dateTime = DateTime.fromMillisecondsSinceEpoch(epochTime, isUtc: true);
-  buffer.add([dateTime.year - 2000]);
-  buffer.add([dateTime.month]);
-  buffer.add([dateTime.day]);
-  buffer.add([dateTime.hour]);
-  buffer.add([dateTime.minute]);
-  buffer.add([dateTime.second]);
+  final epochTime = ByteData.sublistView(compressedEntry, 0, 4).getUint32(0, Endian.little);
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(epochTime * 1000, isUtc: true);
+  buffer.add([
+    dateTime.year - 2000,
+    dateTime.month,
+    dateTime.day,
+    dateTime.hour,
+    dateTime.minute,
+    dateTime.second
+  ]);
+
+ //print("SIZE AFTER ADDING STATIC VALUES 2 ${buffer.length}");
 
   buffer.add([0x00]); // Empty byte
   buffer.add([compressedEntry[4]]); // Target Duration
 
+  print("SIZE AFTER ADDING STATIC VALUES 3 ${buffer.length}");
+
   final directionAndClass = compressedEntry[5];
   buffer.add([directionAndClass & 0x01]); // Target Direction
-  buffer.add([(directionAndClass & 0x06) >> 1]); // Track Type
-  buffer.add([(directionAndClass & 0xF8) >> 3]); // Target Class
+  buffer.add([(directionAndClass >> 1) & 0x03]); // Track Type
+  buffer.add([(directionAndClass >> 3) & 0x1F]); // Target Class
 
-  buffer.add(ByteData.sublistView(compressedEntry, 6, 8).buffer.asUint16List(0, 1).buffer.asUint8List()); // Average Speed
-  buffer.add(ByteData.sublistView(compressedEntry, 8, 10).buffer.asUint16List(0, 1).buffer.asUint8List()); // Peak Speed
-  buffer.add(ByteData.sublistView(compressedEntry, 10, 12).buffer.asUint16List(0, 1).buffer.asUint8List()); // Last Speed
+  //print("SIZE AFTER ADDING STATIC VALUES 4 ${buffer.length}");
+
+  // Speed fields
+  ByteData byteData = ByteData.sublistView(Uint8List.fromList(compressedEntry), 6, 8);
+  ByteData byteData2 = ByteData.sublistView(Uint8List.fromList(compressedEntry), 8, 10);
+  ByteData byteData3 = ByteData.sublistView(Uint8List.fromList(compressedEntry), 10, 12);
+  int averageSpeed = byteData.getInt16(0, Endian.little);
+  int peakSpeed = byteData2.getInt16(0, Endian.little);
+  int lastSpeed = byteData3.getInt16(0, Endian.little);
+ // buffer.add([averageSpeed]);
+ // buffer.add([peakSpeed]);
+  buffer.add([lastSpeed]);
+
+ // print("SIZE AFTER ADDING STATIC VALUES 5 ${buffer.length}");
+
 
   buffer.add([compressedEntry[12]]); // Target Strength
   buffer.add([0x00]); // Lane
@@ -175,10 +188,13 @@ Uint8List reconstructEntry(Uint8List compressedEntry) {
   buffer.add([0x00]); // Quality Measure
   buffer.add([0x00]); // Empty Byte
 
-  // CRC placeholder (You may need to calculate the actual CRC)
-  final byteData = ByteData(2)..setUint16(0, 0x0000, Endian.little);
-  buffer.add(byteData.buffer.asUint8List());
- 
+ // print("SIZE AFTER ADDING STATIC VALUES 6 ${buffer.length}");
+
+  // CRC placeholder
+  buffer.add(Uint8List.fromList([0x00, 0x00]));
+
+   //print("RECONSTRUCTED SIZE ${buffer.length}");
 
   return buffer.toBytes();
 }
+
