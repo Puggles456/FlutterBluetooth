@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/instant_timer.dart';
 import '/widgets/display_received_data/display_received_data_widget.dart';
+import '/widgets/display_device_options/display_device_options_widget.dart';
 import '/widgets/strength_indicator/strength_indicator_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class DevicePageWidget extends StatefulWidget {
 
 class _DevicePageWidgetState extends State<DevicePageWidget> {
   late DevicePageModel _model;
+
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -100,7 +102,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                       widget.deviceName!,
                       style: FlutterFlowTheme.of(context).titleLarge.override(
                             fontFamily: 'Montserrat',
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                             letterSpacing: 0.0,
                           ),
                     ),
@@ -214,15 +216,15 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
+                                borderSide: const BorderSide(
+                                  
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
+                                borderSide: const BorderSide(
+                                  
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
@@ -249,7 +251,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                                       fontFamily: 'Montserrat',
                                       letterSpacing: 0.0,
                                     ),
-                            cursorColor: FlutterFlowTheme.of(context).primary,
+                            cursorColor: FlutterFlowTheme.of(context).primaryText,
                             validator: _model.textControllerValidator
                                 .asValidator(context),
                           ),
@@ -262,7 +264,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                           borderColor: Colors.transparent,
                           borderRadius: 30.0,
                           buttonSize: 50.0,
-                          fillColor: FlutterFlowTheme.of(context).primary,
+                          fillColor: FlutterFlowTheme.of(context).accent1,
                           icon: const Icon(
                             Icons.send_rounded,
                             color: Colors.white,
@@ -317,6 +319,11 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                     ),
                   ),
                 ),
+                
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  child: DisplayDeviceOptionsWidget() // Replace displayDeviceOptionsModal with a valid widget
+                  ),
               ],
             ),
           ),

@@ -110,10 +110,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           title: Text(
-            'Bluetooth Demo',
+            'SD:TDC2',
             style: FlutterFlowTheme.of(context).titleLarge.override(
                   fontFamily: 'Montserrat',
                   letterSpacing: 0.0,
+                  color: FlutterFlowTheme.of(context).secondaryText
                 ),
           ),
           actions: const [],
@@ -141,7 +142,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       ),
                     ),
                   FlutterFlowIconButton(
-                    borderColor: FlutterFlowTheme.of(context).primary,
+                    
                     borderRadius: 20.0,
                     borderWidth: 1.0,
                     buttonSize: 40.0,
@@ -307,9 +308,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                             BorderRadius
                                                                 .circular(16.0),
                                                         border: Border.all(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondary,
+                                                          
                                                           width: 1.0,
                                                         ),
                                                       ),
@@ -627,9 +626,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                   .circular(
                                                                       16.0),
                                                           border: Border.all(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondary,
+                                                            
                                                             width: 1.0,
                                                           ),
                                                         ),

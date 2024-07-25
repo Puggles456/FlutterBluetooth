@@ -1,4 +1,25 @@
-*.apk filter=lfs diff=lfs merge=lfs -text
-*.so filter=lfs diff=lfs merge=lfs -text
-*.dill filter=lfs diff=lfs merge=lfs -text
-*.bin filter=lfs diff=lfs merge=lfs -text
+# Flutter build outputs
+build/
+.dart_tool/
+.packages
+pubspec.lock
+
+# IDE specific files
+.idea/
+.vscode/
+*.iml
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Generated files
+*.apk
+*.aab
+*.dill
+*.pdb
+*.so
+
+# Flutter plugin artifacts
+flutter_*.png
+*.log

@@ -8,6 +8,9 @@ import 'display_received_data_model.dart';
 export 'display_received_data_model.dart';
 import 'dart:typed_data';
 import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DisplayReceivedDataWidget extends StatefulWidget {
   const DisplayReceivedDataWidget({
@@ -44,6 +47,8 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
     super.initState();
     _model = createModel(context, () => DisplayReceivedDataModel());
 
+    requestPermissions();
+
     if (widget.device != null) {
       // Start receiving data
       actions.receiveData(
@@ -56,6 +61,7 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
         // final hexString = dataToHexString(data);
+        writeBytesToFile(data);
         final uncompressedData = parseCompressedData(data);
         final uncompressedSize = uncompressedData.length;
        
@@ -171,7 +177,7 @@ Uint8List reconstructEntry(Uint8List compressedEntry) {
   buffer.add(Uint8List.fromList([0x00, 0x00]));//Contact ID
 
   // Speed fields
- ByteData byteData = ByteData.sublistView(compressedEntry, 6, 8);
+  ByteData byteData = ByteData.sublistView(compressedEntry, 6, 8);
   ByteData byteData2 = ByteData.sublistView(compressedEntry, 8, 10);
   ByteData byteData3 = ByteData.sublistView(compressedEntry, 10, 12);
   int averageSpeed = byteData.getInt16(0, Endian.little);
@@ -207,5 +213,28 @@ Uint8List reconstructEntry(Uint8List compressedEntry) {
   //print("RECONSTRUCTED SIZE ${buffer.length}");
 
   return buffer.toBytes();
+}
+Future<void> requestPermissions() async {
+  if (await Permission.storage.request().isGranted) {
+    // Permission granted
+    print("PERMISSION GRANTED");
+  } else {
+    // Handle the case when permission is denied
+    print('Permission denied');
+  }
+}
+Future<void> writeBytesToFile(Uint8List bytes) async {
+  try {
+    final directory = await getExternalStorageDirectory();
+    print("PATH HERE");
+    print(directory!.path);
+    final filePath = '${directory.path}/output_file.dat';
+    final coolorPath = 'storage/emulated/0/Download/output_file.dat';
+    final file = File(coolorPath);
+    await file.writeAsBytes(bytes, mode: FileMode.writeOnlyAppend);
+    print('File written to $coolorPath');
+  } catch (e) {
+    print('Error writing to file: $e');
+  }
 }
 
