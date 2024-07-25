@@ -33,7 +33,6 @@ class DevicePageWidget extends StatefulWidget {
 class _DevicePageWidgetState extends State<DevicePageWidget> {
   late DevicePageModel _model;
 
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -96,8 +95,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 10.0, 0.0),
                     child: Text(
                       widget.deviceName!,
                       style: FlutterFlowTheme.of(context).titleLarge.override(
@@ -130,7 +129,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                 child: Text(
                   widget.deviceId!,
                   style: FlutterFlowTheme.of(context).labelSmall.override(
@@ -147,7 +147,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
               decoration: const BoxDecoration(),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -181,7 +182,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+            padding:
+                const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +197,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                       ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -217,14 +220,12 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                  
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                  
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
@@ -251,15 +252,16 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                                       fontFamily: 'Montserrat',
                                       letterSpacing: 0.0,
                                     ),
-                            cursorColor: FlutterFlowTheme.of(context).primaryText,
+                            cursorColor:
+                                FlutterFlowTheme.of(context).primaryText,
                             validator: _model.textControllerValidator
                                 .asValidator(context),
                           ),
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 0.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor: Colors.transparent,
                           borderRadius: 30.0,
@@ -306,7 +308,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: wrapWithModel(
                     model: _model.displayReceivedDataModel,
                     updateCallback: () => setState(() {}),
@@ -319,11 +322,9 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                     ),
                   ),
                 ),
-                
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                  child: DisplayDeviceOptionsWidget() // Replace displayDeviceOptionsModal with a valid widget
-                  ),
+                 Container(padding: const EdgeInsets.only(top: 24.0)),
+                DisplayDeviceOptionsWidget() // Replace displayDeviceOptionsModal with a valid widget
+                    
               ],
             ),
           ),
