@@ -1,12 +1,12 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class BatteryStatusWidget extends StatefulWidget {
   bool isExpanded;
   double padding;
+  double days;
 
-  BatteryStatusWidget({required this.isExpanded, required this.padding});
+  BatteryStatusWidget({required this.isExpanded, required this.padding, required this.days});
 
   @override
   _BatteryStatusWidgetState createState() => _BatteryStatusWidgetState();
@@ -20,7 +20,7 @@ class _BatteryStatusWidgetState extends State<BatteryStatusWidget> {
       curve: Curves.fastOutSlowIn,
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 49, 50, 50), // Background color
+          color: const Color.fromARGB(255, 49, 50, 50), // Background color
           borderRadius: BorderRadius.circular(12.0), // Border radius
         ),
         padding: EdgeInsets.all(widget.padding),
@@ -37,9 +37,9 @@ class _BatteryStatusWidgetState extends State<BatteryStatusWidget> {
                         color: Colors.white,
                         size: 50.0,
                       ),
-                      Container(padding: EdgeInsets.only(right: 8.0)),
+                      Container(padding: const EdgeInsets.only(right: 8.0)),
                       Text(
-                        '[placeHolder] days\n Time to Empty',
+                        '${widget.days} days\nTime to Empty',
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                               fontFamily: 'Montserrat',
                               fontSize: 12.0,

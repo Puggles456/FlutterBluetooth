@@ -1,14 +1,13 @@
-import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'display_device_options_model.dart';
 export 'display_device_options_model.dart';
-import 'data_collection_status_widget.dart';
-import 'device_status_widget.dart';
-import 'real_time_traffic_widget.dart';
-import 'battery_status_widget.dart';
-import 'survey_schedule_widget.dart';
-import 'device_information_widget.dart';
+import 'data_collection_status/data_collection_status_widget.dart';
+import 'device_status/device_status_widget.dart';
+import 'real_time_traffic/real_time_traffic_widget.dart';
+import 'battery_status/battery_status_widget.dart';
+import 'survey_schedule/survey_schedule_widget.dart';
+import 'device_information/device_information_widget.dart';
+import 'display_device_options_row_widget.dart';
 
 class DisplayDeviceOptionsWidget extends StatefulWidget {
   @override
@@ -69,24 +68,28 @@ class _DisplayDeviceOptionsWidgetState
       paddingValue4 = _isExpanded4 ? 8.0 : 0.0;
     });
   }
+
   void _toggleExpanded5() {
     setState(() {
       _isExpanded5 = !_isExpanded5;
       paddingValue5 = _isExpanded5 ? 8.0 : 0.0;
     });
   }
+
   void _toggleExpanded6() {
     setState(() {
       _isExpanded6 = !_isExpanded6;
       paddingValue6 = _isExpanded6 ? 8.0 : 0.0;
     });
   }
+
   void _toggleExpanded7() {
     setState(() {
       _isExpanded7 = !_isExpanded7;
       paddingValue7 = _isExpanded7 ? 8.0 : 0.0;
     });
   }
+
   void _toggleExpanded8() {
     setState(() {
       _isExpanded8 = !_isExpanded8;
@@ -94,343 +97,91 @@ class _DisplayDeviceOptionsWidgetState
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    return Expanded(
+        child: ListView(
+      children: [
+        DisplayDeviceOptionsRowWidget(
+            title: "Data Collection Status",
+            onTap: _toggleExpanded,
+            icon: Icons.bar_chart),
+        DataCollectionStatusWidget(
+          isExpanded: _isExpanded,
+          padding: paddingValue,
+          surveyStatus: "[Placeholder]",
+          vehicleCount: 0,
+          surveyStart: "[Placeholder]",
+          memory: "[Placeholder]",
+        ),
 
-    return 
-    Expanded(
-      child:ListView(
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.bar_chart,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Data Collection Status',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
-          DataCollectionStatusWidget(
-              isExpanded: _isExpanded, padding: paddingValue),
+        DisplayDeviceOptionsRowWidget(
+            title: "Real Time Traffic",
+            onTap: _toggleExpanded2,
+            icon: Icons.tv),
 
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded2(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.tv,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Real Time Traffic',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
-          realTimeTrafficWidget(
-              isExpanded: _isExpanded2, padding: paddingValue2),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded3(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.tv,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Device Status',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
+        realTimeTrafficWidget(
+            isExpanded: _isExpanded2,
+            padding: paddingValue2,
+            peakSpeed: 0,
+            direction: "[Placeholder]",
+            distanceTracked: "[Placeholder]"),
 
-          deviceStatusWidget(isExpanded: _isExpanded3, padding: paddingValue3),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded4(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.battery_1_bar,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Battery Status',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
-          BatteryStatusWidget(isExpanded: _isExpanded4, padding: paddingValue4),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded5(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.shuffle,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Survey Schedule',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
-          SurveyScheduleWidget(isExpanded: _isExpanded5, padding: paddingValue5),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded6(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Device Configuration',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                onTap: () => _toggleExpanded7(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Icon(
-                            Icons.book,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        Text(
-                          'Device Information',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyLarge
-                              .override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                  ],
-                ),
-              )),
-          DeviceInformationWidget(isExpanded: _isExpanded7, padding: paddingValue7),
-          GestureDetector(
-            onTap: () => _toggleExpanded8(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(
-                        Icons.info,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
-                    ),
-                    Text(
-                      'About',
-                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                            fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ],
-                ),
-                const Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.white,
-                  size: 24.0,
-                ),
-              ],
-            ),
-          )
-          // Add more Row widgets here if needed
-        ],
-      )
-    );
+        DisplayDeviceOptionsRowWidget(
+            title: "Device Status", onTap: _toggleExpanded3, icon: Icons.tv),
+
+        deviceStatusWidget(
+          isExpanded: _isExpanded3,
+          padding: paddingValue3,
+          date: "[Date Placeholder]",
+          location: "[Placeholder]",
+          latitude: "[Placeholder]",
+          longitude: "[Placeholder]",
+          facingDirection: "[Placeholder]",
+        ),
+        DisplayDeviceOptionsRowWidget(
+            title: "Battery Status",
+            onTap: _toggleExpanded4,
+            icon: Icons.battery_1_bar),
+        BatteryStatusWidget(
+          isExpanded: _isExpanded4,
+          padding: paddingValue4,
+          days: 0.0,
+        ),
+        DisplayDeviceOptionsRowWidget(
+            title: "Survey Schedule",
+            onTap: _toggleExpanded5,
+            icon: Icons.schedule),
+        SurveyScheduleWidget(
+          isExpanded: _isExpanded5,
+          padding: paddingValue5,
+          startTime1: "[00:00]",
+          startTime2: "[00:00]",
+          startTime3: "[00:00]",
+          startTime4: "[00:00]",
+          stopTime1: "[00:00]",
+          stopTime2: "[00:00]",
+          stopTime3: "[00:00]",
+          stopTime4: "[00:00]",
+        ),
+        DisplayDeviceOptionsRowWidget(
+            title: "Device Configuration",
+            onTap: _toggleExpanded6,
+            icon: Icons.settings),
+        DisplayDeviceOptionsRowWidget(
+            title: "Device Information",
+            onTap: _toggleExpanded7,
+            icon: Icons.book),
+        DeviceInformationWidget(
+            isExpanded: _isExpanded7,
+            padding: paddingValue7,
+            serialNumber: "[Placeholder]",
+            firmwareVersion: "[Placeholder]",
+            hardwareVersion: "[Placeholder]"),
+        DisplayDeviceOptionsRowWidget(
+            title: "About", onTap: _toggleExpanded8, icon: Icons.info),
+        // Add more Row widgets here if needed
+      ],
+    ));
   }
 }
