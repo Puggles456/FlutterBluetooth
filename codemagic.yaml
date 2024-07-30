@@ -1,0 +1,31 @@
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    environment:
+      flutter: stable
+      groups:
+        - certificate
+        - provisioning_profile
+    scripts:
+      - name: Set up keychain
+        script: |
+          security create-keychain -p "" build.keychain
+          echo $CERTIFICATE_PRIVATE | base64 --decode > certificate.p12
+          security import certificate.p12 -k ~/Library/Keychains/build.keychain -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign
+          security list-keychains -s ~/Library/Keychains/build.keychain
+          security default-keychain -s ~/Library/Keychains/build.keychain
+          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+          security set-keychain-settings -t 3600 -u ~/Library/Keychains/build.keychain
+      - name: Set up provisioning profile
+        script: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo $MOBILEPROVISION | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/app.mobileprovision
+      - name: Install Flutter dependencies
+        script: flutter pub get
+      - name: Build iOS app
+        script: flutter build ios --release --no-codesign
+      - name: Export IPA
+        script: |
+          xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportOptionsPlist exportOptions.plist -exportPath build/ios/ipa
+    artifacts:
+      - build/ios/ipa
