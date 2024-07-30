@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'display_received_data_model.dart';
 export 'display_received_data_model.dart';
+import 'dart:typed_data';
 import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DisplayReceivedDataWidget extends StatefulWidget {
   const DisplayReceivedDataWidget({
@@ -15,6 +19,7 @@ class DisplayReceivedDataWidget extends StatefulWidget {
   });
 
   final BTDeviceStruct? device;
+  
 
   @override
   State<DisplayReceivedDataWidget> createState() =>
@@ -23,8 +28,13 @@ class DisplayReceivedDataWidget extends StatefulWidget {
 
 class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
   late DisplayReceivedDataModel _model;
-  late StreamSubscription<String> _dataSubscription;
-  final StreamController<String> _dataStreamController = StreamController<String>.broadcast();
+  late StreamSubscription<Uint8List> _dataSubscription;
+  final StreamController<Uint8List> _dataStreamController = StreamController<Uint8List>.broadcast();
+  //final StreamController<Uint8List> _dataStreamController = StreamController<Uint8List>().broadcast();
+  int totalUncompressedSize = 0;
+  double _speed = 0.0;
+  int _totalSize = 0;
+  int _uncompressedSize = 0;
 
   @override
   void setState(VoidCallback callback) {
@@ -37,6 +47,8 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
     super.initState();
     _model = createModel(context, () => DisplayReceivedDataModel());
 
+    requestPermissions();
+
     if (widget.device != null) {
       // Start receiving data
       actions.receiveData(
@@ -48,8 +60,17 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
 
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
+        // final hexString = dataToHexString(data);
+        writeBytesToFile(data);
+        final uncompressedData = parseCompressedData(data);
+        final uncompressedSize = uncompressedData.length;
+       
+       
         setState(() {
-          _model.data = data;
+           _totalSize += uncompressedSize;
+           //_totalSize += data.length;
+          int temp = (_totalSize / 1024).toInt();
+          _model.data = temp.toString();
         });
       });
     }
@@ -82,8 +103,8 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
           child: Text(
             valueOrDefault<String>(
-              _model.data,
-              '-',
+              "Total data Size: ${_model.data} KB",
+              'Total Data Size: ',
             ),
             style: FlutterFlowTheme.of(context).bodyLarge.override(
                   fontFamily: 'Montserrat',
@@ -95,4 +116,125 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
       ],
     );
   }
+   
 }
+ 
+Uint8List parseCompressedData(Uint8List compressedData) {
+  const entrySize = 14; // Size of the compressed entry
+  final numberOfEntries = compressedData.length ~/ entrySize;
+  final buffer = BytesBuilder();
+
+  for (int i = 0; i < numberOfEntries; i++) {
+    final compressedEntry = compressedData.sublist(i * entrySize, (i + 1) * entrySize);
+    final reconstructedEntry = reconstructEntry(compressedEntry);
+    buffer.add(reconstructedEntry);
+  }
+
+  return buffer.toBytes();
+}
+
+Uint8List reconstructEntry(Uint8List compressedEntry) {
+  final buffer = BytesBuilder();
+
+  //print("BUILDING OUR COMPRESSION ENTRY");
+
+  // Fill static values
+  buffer.add(Uint8List.fromList([
+    0x20, 0x00, // Record Size
+    0x04,       // Record Type
+    0x00, 0x00, // Record Number
+    0x02        // Sensor ID
+  ]));
+
+  //print("SIZE AFTER ADDING STATIC VALUES 1 ${buffer.length}");  
+
+  // Epoch timestamp
+  final epochTime = ByteData.sublistView(compressedEntry, 0, 4).getUint32(0, Endian.little);
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(epochTime * 1000, isUtc: true);
+  buffer.add([
+    dateTime.year - 2000,
+    dateTime.month,
+    dateTime.day,
+    dateTime.hour,
+    dateTime.minute,
+    dateTime.second
+  ]);
+
+ //print("SIZE AFTER ADDING STATIC VALUES 2 ${buffer.length}");
+
+  buffer.add([0x00]); // Empty byte
+  buffer.add([compressedEntry[4]]); // Target Duration
+
+ // print("SIZE AFTER ADDING STATIC VALUES 3 ${buffer.length}");
+
+  final directionAndClass = compressedEntry[5];
+  buffer.add([directionAndClass & 0x01]); // Target Direction
+  buffer.add([(directionAndClass >> 1) & 0x03]); // Track Type
+  buffer.add([(directionAndClass >> 3) & 0x1F]); // Target Class
+
+ // print("SIZE AFTER ADDING STATIC VALUES 4 ${buffer.length}");
+
+  buffer.add(Uint8List.fromList([0x00, 0x00]));//Contact ID
+
+  // Speed fields
+  ByteData byteData = ByteData.sublistView(compressedEntry, 6, 8);
+  ByteData byteData2 = ByteData.sublistView(compressedEntry, 8, 10);
+  ByteData byteData3 = ByteData.sublistView(compressedEntry, 10, 12);
+  int averageSpeed = byteData.getInt16(0, Endian.little);
+  int peakSpeed = byteData2.getInt16(0, Endian.little);
+  int lastSpeed = byteData3.getInt16(0, Endian.little);
+
+  buffer.add(Uint8List.fromList([
+    averageSpeed & 0xFF, (averageSpeed >> 8) & 0xFF
+  ])); // Average Speed
+  
+  buffer.add(Uint8List.fromList([
+    peakSpeed & 0xFF, (peakSpeed >> 8) & 0xFF
+  ])); // Peak Speed
+  
+  buffer.add(Uint8List.fromList([
+    lastSpeed & 0xFF, (lastSpeed >> 8) & 0xFF
+  ])); // Last Speed
+
+  //print("SIZE AFTER ADDING STATIC VALUES 5 ${buffer.length}");
+
+
+  buffer.add([compressedEntry[12]]); // Target Strength
+  buffer.add([0x00]); // Lane
+  buffer.add([compressedEntry[13]]); // Event Code
+  buffer.add([0x00]); // Quality Measure
+  buffer.add([0x00]); // Empty Byte
+
+  //print("SIZE AFTER ADDING STATIC VALUES 6 ${buffer.length}");
+
+  // CRC placeholder
+  buffer.add(Uint8List.fromList([0x00, 0x00]));
+
+  //print("RECONSTRUCTED SIZE ${buffer.length}");
+
+  return buffer.toBytes();
+}
+Future<void> requestPermissions() async {
+  if (await Permission.storage.request().isGranted) {
+    // Permission granted
+    print("PERMISSION GRANTED");
+  } else {
+    // Handle the case when permission is denied
+    print('Permission denied');
+  }
+}
+Future<void> writeBytesToFile(Uint8List bytes) async {
+  try {
+    final directory = await getExternalStorageDirectory();
+    print("PATH HERE");
+    print(directory!.path);
+    final filePath = '${directory.path}/output_file.dat';
+    final coolorPath = 'storage/emulated/0/Download/output_file.dat';
+    final file = File(coolorPath);
+    await file.writeAsBytes(bytes, mode: FileMode.writeOnlyAppend);
+    print('File written to $coolorPath');
+  } catch (e) {
+    print('Error writing to file: $e');
+  }
+}
+

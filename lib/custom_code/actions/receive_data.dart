@@ -14,7 +14,7 @@ Future<void> receiveData(
   BTDeviceStruct deviceInfo,
   String serviceUuid,
   String characteristicUuid,
-  StreamController<String> dataStreamController,
+  StreamController<Uint8List> dataStreamController,
 ) async {
   try {
     final device = BluetoothDevice.fromId(deviceInfo.id);
@@ -29,7 +29,8 @@ Future<void> receiveData(
               print("LISTENING TO DATA");
               await characteristic.setNotifyValue(true);
               characteristic.value.listen((value) {
-                final data = String.fromCharCodes(value);
+                //final data = String.fromCharCodes(value);
+                final data = Uint8List.fromList(value);
                 dataStreamController.add(data);
               });
             }
