@@ -8,6 +8,8 @@ import 'battery_status/battery_status_widget.dart';
 import 'survey_schedule/survey_schedule_widget.dart';
 import 'device_information/device_information_widget.dart';
 import 'display_device_options_row_widget.dart';
+import 'device_configuration/device_configuration_widget.dart';
+import 'about/about_widget.dart';
 
 class DisplayDeviceOptionsWidget extends StatefulWidget {
   @override
@@ -105,7 +107,8 @@ class _DisplayDeviceOptionsWidgetState
         DisplayDeviceOptionsRowWidget(
             title: "Data Collection Status",
             onTap: _toggleExpanded,
-            icon: Icons.bar_chart),
+            imagePath: "assets/images/i_collection.png",
+            expanded: _isExpanded),
         DataCollectionStatusWidget(
           isExpanded: _isExpanded,
           padding: paddingValue,
@@ -118,7 +121,8 @@ class _DisplayDeviceOptionsWidgetState
         DisplayDeviceOptionsRowWidget(
             title: "Real Time Traffic",
             onTap: _toggleExpanded2,
-            icon: Icons.tv),
+            imagePath: "assets/images/i_operation.png",
+            expanded: _isExpanded2),
 
         realTimeTrafficWidget(
             isExpanded: _isExpanded2,
@@ -128,7 +132,10 @@ class _DisplayDeviceOptionsWidgetState
             distanceTracked: "[Placeholder]"),
 
         DisplayDeviceOptionsRowWidget(
-            title: "Device Status", onTap: _toggleExpanded3, icon: Icons.tv),
+            title: "Device Status",
+            onTap: _toggleExpanded3,
+            imagePath: "assets/images/i_status.png",
+            expanded: _isExpanded3,),
 
         deviceStatusWidget(
           isExpanded: _isExpanded3,
@@ -142,7 +149,8 @@ class _DisplayDeviceOptionsWidgetState
         DisplayDeviceOptionsRowWidget(
             title: "Battery Status",
             onTap: _toggleExpanded4,
-            icon: Icons.battery_1_bar),
+            imagePath: "assets/images/battery.png",
+            expanded: _isExpanded4),
         BatteryStatusWidget(
           isExpanded: _isExpanded4,
           padding: paddingValue4,
@@ -151,7 +159,8 @@ class _DisplayDeviceOptionsWidgetState
         DisplayDeviceOptionsRowWidget(
             title: "Survey Schedule",
             onTap: _toggleExpanded5,
-            icon: Icons.schedule),
+            imagePath: "assets/images/i_configuration.png",
+            expanded: _isExpanded5,),
         SurveyScheduleWidget(
           isExpanded: _isExpanded5,
           padding: paddingValue5,
@@ -167,11 +176,17 @@ class _DisplayDeviceOptionsWidgetState
         DisplayDeviceOptionsRowWidget(
             title: "Device Configuration",
             onTap: _toggleExpanded6,
-            icon: Icons.settings),
+            imagePath: "assets/images/i_setting.png",
+            expanded: _isExpanded6,),
+        DeviceConfigurationWidget(
+          isExpanded: _isExpanded6,
+          padding: paddingValue6,
+        ),
         DisplayDeviceOptionsRowWidget(
             title: "Device Information",
             onTap: _toggleExpanded7,
-            icon: Icons.book),
+            imagePath: "assets/images/i_information.png",
+            expanded: _isExpanded7),
         DeviceInformationWidget(
             isExpanded: _isExpanded7,
             padding: paddingValue7,
@@ -179,7 +194,16 @@ class _DisplayDeviceOptionsWidgetState
             firmwareVersion: "[Placeholder]",
             hardwareVersion: "[Placeholder]"),
         DisplayDeviceOptionsRowWidget(
-            title: "About", onTap: _toggleExpanded8, icon: Icons.info),
+            title: "About",
+            onTap: _toggleExpanded8,
+            imagePath: "assets/images/i_about.png",
+            expanded: _isExpanded8),
+        AboutWidget(
+          isExpanded: _isExpanded8,
+          padding: paddingValue8,
+          SD: "TDC 2",
+          version: "1.0",
+        )
         // Add more Row widgets here if needed
       ],
     ));

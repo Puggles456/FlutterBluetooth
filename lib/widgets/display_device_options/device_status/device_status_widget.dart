@@ -46,11 +46,12 @@ class _deviceStatusWidgetState extends State<deviceStatusWidget> {
                               fontWeight: FontWeight.w600,
                             ),
                       ),
-                      const Icon(
-                        Icons.battery_1_bar,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
+                      Image.asset(
+                      "assets/images/i_battery.png", // Load the image from assets
+                      color: Colors.white,
+                      width: 24.0,
+                      height: 24.0,
+                      )
                     ],
                   ),
                   Container(padding: const EdgeInsets.only(bottom: 8.0)),
