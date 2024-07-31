@@ -11,6 +11,7 @@
         android:label="Bluetooth Demo"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
+        android:theme="@style/LaunchTheme"
         android:requestLegacyExternalStorage="true">
 
         <activity
