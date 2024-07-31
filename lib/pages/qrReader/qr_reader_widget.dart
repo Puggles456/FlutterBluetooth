@@ -36,7 +36,8 @@ class _QRViewExampleState extends State<QRViewExample> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              context.safePop();
+             context.safePop();
+            
             },
           )),
       body: Column(

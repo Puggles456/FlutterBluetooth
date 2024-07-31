@@ -24,6 +24,8 @@ class HomePageWidget extends StatefulWidget {
 
   final bool isBTEnabled;
 
+  
+
   @override
   State<HomePageWidget> createState() => _HomePageWidgetState();
 }
@@ -37,6 +39,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
   final animationsMap = <String, AnimationInfo>{};
 
   bool _isLoading = false;
+
+  
 
   @override
   void initState() {
@@ -96,18 +100,28 @@ class _HomePageWidgetState extends State<HomePageWidget>
     });
   }
 
-  void bluetoothOnPressed(BTDeviceStruct bluetoothDevice, List<BTDeviceStruct> connectedDevices){
-    print("DISCONNECTING");
-    actions.disconnectDevice(bluetoothDevice);
-    connectedDevices.remove(bluetoothDevice);
-   
-  }
+  
 
   @override
   void dispose() {
     _model.dispose();
 
     super.dispose();
+  }
+
+  void bluetoothOnPressed(BTDeviceStruct bluetoothDevice, List<BTDeviceStruct> connectedDevices)async{
+   print("DISCONNECTING");
+  await actions.disconnectDevice(bluetoothDevice);
+
+  if (!mounted) return;
+
+  print("BEFORE ${_model.connectedDevices.toString()}");
+  setState(() {
+    _model.connectedDevices.remove(bluetoothDevice);
+  });
+  print("AFTER");
+  print(_model.connectedDevices);
+   
   }
 
   @override
@@ -446,7 +460,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                       .primaryText,
                                                                   imagePath:
                                                                       'assets/images/i_bluetooth.png',
-                                                                  function: () => bluetoothOnPressed(displayConnectedDevciesItem,displayConnectedDevcies),
+                                                                  function: () => bluetoothOnPressed(displayConnectedDevciesItem,_model.connectedDevices),
                                                                 ),
                                                                 Container(
                                                                     padding: const EdgeInsets
@@ -532,10 +546,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    _model.isFetchingConnectedDevices =
-                                                        true;
+                                                   // _model.isFetchingConnectedDevices =
+                                                     //   true;
                                                     _model.isFetchingDevices =
                                                         true;
+                                                      /*
                                                     setState(() {});
                                                     _model.fetchedConnectedDevicesCopy =
                                                         await actions
@@ -546,6 +561,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         .fetchedConnectedDevices!
                                                         .toList()
                                                         .cast<BTDeviceStruct>();
+                                                      */
                                                     setState(() {});
                                                     _model.fetchedDevicesCopy =
                                                         await actions
@@ -630,16 +646,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        final displayConnectedDevices =
-                                                            _model
-                                                                .connectedDevices
-                                                                .toList();
-                                                        /*
-                                                        if(displayConnectedDevices.contains(displayDevicesItem)){
-                          
+                                                        
+                                                        
+                                                        if(_model.connectedDevices.contains(displayDevicesItem)){
+                                                          _showAlertDialog(displayDevicesItem.name);
                                                           return;
                                                         }
-                                                        */
+                                                        
 
                                                         setState(() {
                                                           _isLoading =
@@ -652,7 +665,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         );
                                                         _model.addToConnectedDevices(
                                                             displayDevicesItem);
-                                                        setState(() {});
+                                                        setState(() {_isLoading = false;});
 
                                                         context.pushNamed(
                                                           'DevicePage',
@@ -684,7 +697,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         );
 
                                                         setState(() {
-                                                          _isLoading = false;
+                                                         
                                                         });
                                                       },
                                                       child: Container(
@@ -860,6 +873,25 @@ class _HomePageWidgetState extends State<HomePageWidget>
           ),
         ),
       ),
+    );
+  }
+  void _showAlertDialog(String deviceName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("${deviceName} connected" ),
+          content: Text("You have already connected to this device."),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

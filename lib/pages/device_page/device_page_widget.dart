@@ -146,12 +146,13 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
               height: 200.0,
               decoration: const BoxDecoration(),
             ),
-            Padding(
+            const Padding(
               padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                  EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  /*
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
                     borderRadius: 20.0,
@@ -172,6 +173,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                       context.safePop();
                     },
                   ),
+                  */
                 ],
               ),
             ),

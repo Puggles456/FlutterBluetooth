@@ -33,17 +33,20 @@ class _PressableImageState extends State<PressableImage> {
         });
       },
       onTapUp: (_) {
-        
-       Future.delayed(Duration(milliseconds: 100), () {
-      setState(() {
-        _imageOpacity = 1.0;
-      });
-    });
+        Future.delayed(Duration(milliseconds: 100), () {
+          if (mounted) {  // Check if the widget is still mounted before calling setState
+            setState(() {
+              _imageOpacity = 1.0;
+            });
+          }
+        });
       },
       onTapCancel: () {
-        setState(() {
-          _imageOpacity = 1.0;
-        });
+        if (mounted) {  // Check if the widget is still mounted before calling setState
+          setState(() {
+            _imageOpacity = 1.0;
+          });
+        }
       },
       child: Opacity(
         opacity: _imageOpacity,
