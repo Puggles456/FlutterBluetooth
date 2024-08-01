@@ -47,11 +47,11 @@ class _realTimeTrafficWidgetState extends State<realTimeTrafficWidget> {
                       
                     ],
                   ),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
                   DisplayDeviceOptionsText(text1: "Peak Speed:", text2: widget.peakSpeed.toString(), width: 200),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
                   DisplayDeviceOptionsText(text1: "Direction:", text2: widget.direction, width: 200),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
                   DisplayDeviceOptionsText(text1: "Distance Tracked:", text2: widget.distanceTracked, width: 200),
                   // Add more details here
                 ],

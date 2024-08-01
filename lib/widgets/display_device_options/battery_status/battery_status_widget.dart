@@ -37,40 +37,55 @@ class _BatteryStatusWidgetState extends State<BatteryStatusWidget> {
                         width: 100,
                         height: 90,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: Color.fromARGB(255, 34, 35, 35),
-                          border: Border.all(
-                            color: Color.fromARGB(255, 80, 81, 81), // Border color
-                            width: 2.0, // Border width
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.black),
                         child: Center(
-                          child: Row(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            
                             children: [
-                              Text(
-                                '0',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 24.0,
-                                      color:
-                                          FlutterFlowTheme.of(context).primaryText,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: [
+                                  Text(
+                                    '0',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 24.0,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                  Text(
+                                    '%',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 12.0,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ],
                               ),
+                              
                               Text(
-                                '%',
+                                '0.0 watts',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
                                       fontFamily: 'Montserrat',
                                       fontSize: 12.0,
-                                      color:
-                                          FlutterFlowTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -84,22 +99,49 @@ class _BatteryStatusWidgetState extends State<BatteryStatusWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '${widget.days} days',
-                            style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 24.0,
-                                  color: FlutterFlowTheme.of(context).primaryText,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                          Row(
+                            textBaseline: TextBaseline.alphabetic,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            children: [
+                              Text(
+                                '${widget.days}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 24.0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              Container(
+                                  padding: const EdgeInsets.only(right: 4.0)),
+                              Text(
+                                'days',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 12.0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ],
                           ),
                           Text(
                             'Time to Empty',
-                            style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            style: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .override(
                                   fontFamily: 'Montserrat',
                                   fontSize: 12.0,
-                                  color: FlutterFlowTheme.of(context).primaryText,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),

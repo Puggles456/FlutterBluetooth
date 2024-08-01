@@ -1,3 +1,7 @@
+import 'package:shared_preferences_platform_interface/types.dart';
+import '/widgets/pressable_image/pressable_image_widget.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import '../qrReader/qr_reader_widget.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -20,6 +24,8 @@ class HomePageWidget extends StatefulWidget {
 
   final bool isBTEnabled;
 
+  
+
   @override
   State<HomePageWidget> createState() => _HomePageWidgetState();
 }
@@ -33,6 +39,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
   final animationsMap = <String, AnimationInfo>{};
 
   bool _isLoading = false;
+
+  
 
   @override
   void initState() {
@@ -92,11 +100,28 @@ class _HomePageWidgetState extends State<HomePageWidget>
     });
   }
 
+  
+
   @override
   void dispose() {
     _model.dispose();
 
     super.dispose();
+  }
+
+  void bluetoothOnPressed(BTDeviceStruct bluetoothDevice, List<BTDeviceStruct> connectedDevices)async{
+   print("DISCONNECTING");
+  await actions.disconnectDevice(bluetoothDevice);
+
+  if (!mounted) return;
+
+  print("BEFORE ${_model.connectedDevices.toString()}");
+  setState(() {
+    _model.connectedDevices.remove(bluetoothDevice);
+  });
+  print("AFTER");
+  print(_model.connectedDevices);
+   
   }
 
   @override
@@ -129,8 +154,23 @@ class _HomePageWidgetState extends State<HomePageWidget>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  if (widget.isBTEnabled)
+                    FlutterFlowIconButton(
+                      borderRadius: 20.0,
+                      borderWidth: 1.0,
+                      buttonSize: 40.0,
+                      icon: Icon(
+                        Icons.qr_code,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        //context.goNamed('QrPage');
+                        context.go('/qrPage');
+                      },
+                    ),
                   if (!widget.isBTEnabled)
                     Expanded(
                       child: Text(
@@ -146,7 +186,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     borderRadius: 20.0,
                     borderWidth: 1.0,
                     buttonSize: 40.0,
-                    fillColor: FlutterFlowTheme.of(context).accent1,
                     icon: Icon(
                       Icons.refresh_rounded,
                       color: FlutterFlowTheme.of(context).primaryText,
@@ -301,10 +340,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                     child: Container(
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .accent2,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 49, 50, 50),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(16.0),
@@ -410,13 +448,45 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                 ),
                                                               ],
                                                             ),
-                                                            Icon(
-                                                              Icons
-                                                                  .arrow_forward_ios_rounded,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 24.0,
+                                                            Row(
+                                                              children: [
+                                                                PressableImage(
+                                                                  key: Key(
+                                                                      'Keybqz_${displayConnectedDevciesIndex}_of_${displayConnectedDevcies.length}'),
+                                                                  width: 20.0,
+                                                                  height: 20,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  imagePath:
+                                                                      'assets/images/i_bluetooth.png',
+                                                                  function: () => bluetoothOnPressed(displayConnectedDevciesItem,_model.connectedDevices),
+                                                                ),
+                                                                Container(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            4.0)),
+                                                                Container(
+                                                                  height: 16.0,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  width: 1.0,
+                                                                ),
+                                                                Container(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            4.0)),
+                                                                Icon(
+                                                                  Icons
+                                                                      .arrow_forward_ios_rounded,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  size: 20.0,
+                                                                ),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),
@@ -476,10 +546,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    _model.isFetchingConnectedDevices =
-                                                        true;
+                                                   // _model.isFetchingConnectedDevices =
+                                                     //   true;
                                                     _model.isFetchingDevices =
                                                         true;
+                                                      /*
                                                     setState(() {});
                                                     _model.fetchedConnectedDevicesCopy =
                                                         await actions
@@ -490,6 +561,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         .fetchedConnectedDevices!
                                                         .toList()
                                                         .cast<BTDeviceStruct>();
+                                                      */
                                                     setState(() {});
                                                     _model.fetchedDevicesCopy =
                                                         await actions
@@ -574,6 +646,14 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
+                                                        
+                                                        
+                                                        if(_model.connectedDevices.contains(displayDevicesItem)){
+                                                          _showAlertDialog(displayDevicesItem.name);
+                                                          return;
+                                                        }
+                                                        
+
                                                         setState(() {
                                                           _isLoading =
                                                               true; // Show loading screen
@@ -585,7 +665,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         );
                                                         _model.addToConnectedDevices(
                                                             displayDevicesItem);
-                                                        setState(() {});
+                                                        setState(() {_isLoading = false;});
 
                                                         context.pushNamed(
                                                           'DevicePage',
@@ -617,16 +697,16 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         );
 
                                                         setState(() {
-                                                          _isLoading = false;
+                                                         
                                                         });
                                                       },
                                                       child: Container(
                                                         width: double.infinity,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .accent2,
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255, 49, 50, 50),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
@@ -739,7 +819,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
-                                                                size: 24.0,
+                                                                size: 20.0,
                                                               ),
                                                             ],
                                                           ),
@@ -793,6 +873,25 @@ class _HomePageWidgetState extends State<HomePageWidget>
           ),
         ),
       ),
+    );
+  }
+  void _showAlertDialog(String deviceName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("${deviceName} connected" ),
+          content: Text("You have already connected to this device."),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

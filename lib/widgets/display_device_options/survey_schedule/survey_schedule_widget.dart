@@ -124,21 +124,7 @@ class _SurveyScheduleWidgetState extends State<SurveyScheduleWidget> {
 
                   Container(padding: const EdgeInsets.only(top: 8.0)),
 
-                  Column(children: [
-                    SurveyScheduleMode(
-                        title: "Continuous Mode",
-                        onPressed: onTap,
-                        choice: choice,
-                        ownChoice: 0),
-                    Container(padding: const EdgeInsets.only(top: 4.0)),
-                    SurveyScheduleMode(
-                        title: "Scheduled Mode",
-                        onPressed: onTap,
-                        choice: choice,
-                        ownChoice: 1),
-                    Container(padding: const EdgeInsets.only(top: 16.0)),
-                  ]),
-
+                  
                   // Add more details here
                   SurveyScheduleSectionWidget(
                       title: "1",
@@ -171,6 +157,20 @@ class _SurveyScheduleWidgetState extends State<SurveyScheduleWidget> {
                       stopTime1: widget.stopTime4),
 
                   Container(padding: const EdgeInsets.only(top: 16)),
+                  Row(
+                    children: [
+                      Text(
+                        (box1 || box2 || box3 || box4) ? 'Schedulded Mode' : 'Continuous Mode',
+                        style: FlutterFlowTheme.of(context).bodyLarge.override(
+                          fontFamily: 'Montserrat',
+                          fontSize: 22.0,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       // Action to perform on button press

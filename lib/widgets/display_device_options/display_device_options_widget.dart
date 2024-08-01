@@ -10,6 +10,7 @@ import 'device_information/device_information_widget.dart';
 import 'display_device_options_row_widget.dart';
 import 'device_configuration/device_configuration_widget.dart';
 import 'about/about_widget.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 
 class DisplayDeviceOptionsWidget extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _DisplayDeviceOptionsWidgetState
   bool _isExpanded6 = false;
   bool _isExpanded7 = false;
   bool _isExpanded8 = false;
+  bool _isExpanded9 = false;
   double paddingValue = 0.0;
   double paddingValue2 = 0.0;
   double paddingValue3 = 0.0;
@@ -36,6 +38,7 @@ class _DisplayDeviceOptionsWidgetState
   double paddingValue6 = 0.0;
   double paddingValue7 = 0.0;
   double paddingValue8 = 0.0;
+  double paddingValue9 = 0.0;
 
   @override
   void setState(VoidCallback callback) {
@@ -99,6 +102,13 @@ class _DisplayDeviceOptionsWidgetState
     });
   }
 
+  void _toggleExpanded9() {
+    setState(() {
+      _isExpanded9 = !_isExpanded9;
+      paddingValue9 = _isExpanded9 ? 8.0 : 0.0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -117,7 +127,10 @@ class _DisplayDeviceOptionsWidgetState
           surveyStart: "[Placeholder]",
           memory: "[Placeholder]",
         ),
-
+        Visibility(
+          visible: _isExpanded,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+        ),
         DisplayDeviceOptionsRowWidget(
             title: "Real Time Traffic",
             onTap: _toggleExpanded2,
@@ -130,12 +143,17 @@ class _DisplayDeviceOptionsWidgetState
             peakSpeed: 0,
             direction: "[Placeholder]",
             distanceTracked: "[Placeholder]"),
+        Visibility(
+          visible: _isExpanded2,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+        ),
 
         DisplayDeviceOptionsRowWidget(
-            title: "Device Status",
-            onTap: _toggleExpanded3,
-            imagePath: "assets/images/i_status.png",
-            expanded: _isExpanded3,),
+          title: "Device Status",
+          onTap: _toggleExpanded3,
+          imagePath: "assets/images/i_status.png",
+          expanded: _isExpanded3,
+        ),
 
         deviceStatusWidget(
           isExpanded: _isExpanded3,
@@ -145,6 +163,11 @@ class _DisplayDeviceOptionsWidgetState
           latitude: "[Placeholder]",
           longitude: "[Placeholder]",
           facingDirection: "[Placeholder]",
+        ),
+
+        Visibility(
+          visible: _isExpanded3,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
         ),
         DisplayDeviceOptionsRowWidget(
             title: "Battery Status",
@@ -156,11 +179,30 @@ class _DisplayDeviceOptionsWidgetState
           padding: paddingValue4,
           days: 0.0,
         ),
+        Visibility(
+          visible: _isExpanded4,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+        ),
         DisplayDeviceOptionsRowWidget(
-            title: "Survey Schedule",
-            onTap: _toggleExpanded5,
-            imagePath: "assets/images/i_configuration.png",
-            expanded: _isExpanded5,),
+          title: "Device Configuration",
+          onTap: _toggleExpanded6,
+          imagePath: "assets/images/i_setting.png",
+          expanded: _isExpanded6,
+        ),
+        DeviceConfigurationWidget(
+          isExpanded: _isExpanded6,
+          padding: paddingValue6,
+        ),
+        Visibility(
+          visible: _isExpanded6,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+        ),
+        DisplayDeviceOptionsRowWidget(
+          title: "Survey Schedule",
+          onTap: _toggleExpanded5,
+          imagePath: "assets/images/i_configuration.png",
+          expanded: _isExpanded5,
+        ),
         SurveyScheduleWidget(
           isExpanded: _isExpanded5,
           padding: paddingValue5,
@@ -173,14 +215,9 @@ class _DisplayDeviceOptionsWidgetState
           stopTime3: "[00:00]",
           stopTime4: "[00:00]",
         ),
-        DisplayDeviceOptionsRowWidget(
-            title: "Device Configuration",
-            onTap: _toggleExpanded6,
-            imagePath: "assets/images/i_setting.png",
-            expanded: _isExpanded6,),
-        DeviceConfigurationWidget(
-          isExpanded: _isExpanded6,
-          padding: paddingValue6,
+        Visibility(
+          visible: _isExpanded5,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
         ),
         DisplayDeviceOptionsRowWidget(
             title: "Device Information",
@@ -193,6 +230,16 @@ class _DisplayDeviceOptionsWidgetState
             serialNumber: "[Placeholder]",
             firmwareVersion: "[Placeholder]",
             hardwareVersion: "[Placeholder]"),
+        Visibility(
+          visible: _isExpanded7,
+          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+        ),
+        DisplayDeviceOptionsRowWidget(
+            title: "Diagnostic",
+            onTap: () => _showModal(context),
+            imagePath: "assets/images/i_test.png",
+            expanded: _isExpanded9),
+
         DisplayDeviceOptionsRowWidget(
             title: "About",
             onTap: _toggleExpanded8,
@@ -207,5 +254,97 @@ class _DisplayDeviceOptionsWidgetState
         // Add more Row widgets here if needed
       ],
     ));
+  }
+
+  void _showModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Password authentication\nis required to use this\nfeature.",
+            style: FlutterFlowTheme.of(context).bodyLarge.override(
+                fontFamily: 'Montserrat',
+                color: FlutterFlowTheme.of(context).primaryText,
+                fontWeight: FontWeight.w600,
+                fontSize: 20.0),
+          ),
+          content: TextFormField(
+            autofocus: false,
+            obscureText: false,
+            decoration: InputDecoration(
+              hintText: 'Please enter password',
+              hintStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                    fontFamily: 'Montserrat',
+                    letterSpacing: 0.0,
+                  ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                    width: 1.0, color: Color.fromARGB(133, 255, 255, 255)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                    width: 1.0, color: Color.fromARGB(133, 255, 255, 255)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).error,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: FlutterFlowTheme.of(context).error,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              filled: true,
+              fillColor: const Color.fromARGB(255, 49, 50, 50),
+            ),
+            style: FlutterFlowTheme.of(context).bodyLarge.override(
+                  fontFamily: 'Montserrat',
+                  letterSpacing: 0.0,
+                ),
+            cursorColor: FlutterFlowTheme.of(context).primaryText,
+          ),
+          backgroundColor: const Color.fromARGB(255, 49, 50, 50),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(
+                        width: 1.0, color: Color.fromARGB(133, 255, 255, 255)),
+                    backgroundColor:
+                        Color.fromARGB(170, 46, 48, 48), // Text color
+                  ),
+                  child: Text("Cancel"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor:
+                        FlutterFlowTheme.of(context).accent1, // Text color
+                  ),
+                  child: Text("Confirm"),
+                )
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }

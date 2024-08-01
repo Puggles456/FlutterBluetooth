@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../display_device_options_text.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 
 class DataCollectionStatusWidget extends StatefulWidget {
   bool isExpanded;
@@ -48,13 +49,84 @@ class _DataCollectionStatusWidgetState
             ? Column(
                 children: [
                   //SizedBox(height: 16.0), // Add vertical spacing
-                  DisplayDeviceOptionsText(text1: "Survey Status:", text2: widget.surveyStatus,width: 160,),
+                  //DisplayDeviceOptionsText(text1: "Vehicle Count:", text2: widget.surveyStatus,width: 160,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        "Vehicle Count",
+                        style: FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Montserrat',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
+                  ),
                   Container(padding: const EdgeInsets.only(bottom: 4.0)),
-                  DisplayDeviceOptionsText(text1: "Vehicle Count:", text2: widget.vehicleCount.toString(), width: 160,),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
-                  DisplayDeviceOptionsText(text1: "Survey Start:", text2: widget.surveyStart, width: 160,),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
-                  DisplayDeviceOptionsText(text1: "Memory:", text2: widget.memory, width: 160,),
+                  Container(
+                       padding: const EdgeInsets.all(4.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Color.fromARGB(255, 34, 35, 35),
+                          
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            
+                            children: [
+                              Text(
+                                '0',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 24.0,
+                                      color:
+                                          FlutterFlowTheme.of(context).primaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              Text(
+                                'Total',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 20.0,
+                                      color:
+                                          FlutterFlowTheme.of(context).primaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
+                  DisplayDeviceOptionsText(
+                    text1: "Survey Start:",
+                    text2: widget.surveyStatus,
+                    width: 220,
+                  ),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
+                  DisplayDeviceOptionsText(
+                    text1: "Duration of Operation:",
+                    text2: widget.surveyStart,
+                    width: 220,
+                  ),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
+                  DisplayDeviceOptionsText(
+                    text1: "Memory Used",
+                    text2: widget.memory,
+                    width: 220,
+                  ),
+                   Container(padding: const EdgeInsets.only(bottom: 4.0))
                   // Add more details here
                 ],
               )

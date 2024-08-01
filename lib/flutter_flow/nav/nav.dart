@@ -54,6 +54,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SplashPageWidget(),
         ),
         FFRoute(
+          name: 'QrPage',
+          path: '/qrPage',
+          builder: (context, params) => QRViewExample(),
+        ),
+        FFRoute(
           name: 'DevicePage',
           path: '/devicePage',
           builder: (context, params) => DevicePageWidget(

@@ -86,7 +86,7 @@ class _deviceStatusWidgetState extends State<deviceStatusWidget> {
                       )
                     ],
                   ),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
@@ -119,7 +119,7 @@ class _deviceStatusWidgetState extends State<deviceStatusWidget> {
                       )
                     ],
                   ),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
@@ -151,7 +151,7 @@ class _deviceStatusWidgetState extends State<deviceStatusWidget> {
                       )
                     ],
                   ),
-                  Container(padding: const EdgeInsets.only(bottom: 4.0)),
+                  Container(padding: const EdgeInsets.only(bottom: 8.0)),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,

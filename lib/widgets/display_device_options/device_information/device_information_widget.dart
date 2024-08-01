@@ -170,6 +170,50 @@ class _DeviceInformationWidgetState extends State<DeviceInformationWidget> {
                             width: 205),
                       ],
                     ),
+                  ),
+                  Visibility(
+                    visible: choice == 1,
+                    child: Column(
+                      children: [
+                        Container(padding: const EdgeInsets.only(top: 10.0)),
+                        DisplayDeviceOptionsText(
+                            text1: "Serial Number:",
+                            text2: widget.serialNumber,
+                            width: 205),
+                        Container(padding: const EdgeInsets.only(top: 4.0)),
+                        DisplayDeviceOptionsText(
+                            text1: "Hardware Version:",
+                            text2: widget.hardwareVersion,
+                            width: 205),
+                        Container(padding: const EdgeInsets.only(top: 4.0)),
+                        DisplayDeviceOptionsText(
+                            text1: "Firmware Version:",
+                            text2: widget.firmwareVersion,
+                            width: 205),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: choice == 2,
+                    child: Column(
+                      children: [
+                        Container(padding: const EdgeInsets.only(top: 10.0)),
+                        DisplayDeviceOptionsText(
+                            text1: "Serial Number:",
+                            text2: widget.serialNumber,
+                            width: 205),
+                        Container(padding: const EdgeInsets.only(top: 4.0)),
+                        DisplayDeviceOptionsText(
+                            text1: "Hardware Version:",
+                            text2: widget.hardwareVersion,
+                            width: 205),
+                        Container(padding: const EdgeInsets.only(top: 4.0)),
+                        DisplayDeviceOptionsText(
+                            text1: "Firmware Version:",
+                            text2: widget.firmwareVersion,
+                            width: 205),
+                      ],
+                    ),
                   )
                   // Add more details here
                 ],
