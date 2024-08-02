@@ -667,6 +667,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                             displayDevicesItem);
                                                         setState(() {_isLoading = false;});
 
+                                                        setState(() { _model.removeFromFoundDevices(
+                                                            displayDevicesItem);});
+                                                       
+
                                                         context.pushNamed(
                                                           'DevicePage',
                                                           queryParameters: {
