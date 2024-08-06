@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:test/backend/schema/structs/index.dart';
 import 'package:test/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:test/flutter_flow/flutter_flow_theme.dart';
 import 'package:test/flutter_flow/flutter_flow_util.dart';
@@ -90,7 +92,17 @@ class _QRViewExampleState extends State<QRViewExample> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
+       
         qrText = scanData.code;
+        BTDeviceStruct device = BTDeviceStruct();
+
+        try {
+          final Map<String, dynamic> data = json.decode(qrText!);
+          device.name = data['deviceName'];
+          device.id = data['deviceId'];
+        } catch (e) {
+          print('Error decoding QR code data: $e');
+        }
       });
     });
   }

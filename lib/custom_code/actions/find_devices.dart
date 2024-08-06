@@ -39,5 +39,15 @@ Future<List<BTDeviceStruct>> findDevices() async {
   } catch (e) {
     debugPrint(e.toString());
   }
+   List<BTDeviceStruct> filteredDevices = filter(devices);
+
+  //return filteredDevices;
   return devices;
+}
+
+List<BTDeviceStruct> filter(List<BTDeviceStruct> devices) {
+  final filteredDevices = devices.where((device) => device.name.contains("TDC")).toList();
+  return filteredDevices;
+
+
 }
