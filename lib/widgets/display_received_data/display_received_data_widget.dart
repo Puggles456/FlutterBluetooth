@@ -82,6 +82,7 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
       );
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
+        print("Received data: $data");
         // final hexString = dataToHexString(data);
         //writeBytesToFile(data);
         //final uncompressedData = parseCompressedData(data);

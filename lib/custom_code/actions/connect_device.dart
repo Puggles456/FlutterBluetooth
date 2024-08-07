@@ -16,9 +16,11 @@ Future<bool> connectDevice(BTDeviceStruct deviceInfo) async {
   var hasWriteCharacteristic = false;
   try {
     await device.connect();
+    
     if (Platform.isAndroid) {
     await device.requestMtu(512);
     }
+    
 
     final services = await device.discoverServices();
     for (BluetoothService service in services) {
