@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'display_device_options_model.dart';
 export 'display_device_options_model.dart';
 import 'data_collection_status/data_collection_status_widget.dart';
@@ -11,6 +14,7 @@ import 'display_device_options_row_widget.dart';
 import 'device_configuration/device_configuration_widget.dart';
 import 'about/about_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '../../Data_Byte_Manager.dart';
 
 class DisplayDeviceOptionsWidget extends StatefulWidget {
   @override
@@ -39,6 +43,12 @@ class _DisplayDeviceOptionsWidgetState
   double paddingValue7 = 0.0;
   double paddingValue8 = 0.0;
   double paddingValue9 = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _model = displayDeviceOptionsModal();
+  }
 
   @override
   void setState(VoidCallback callback) {
@@ -111,149 +121,151 @@ class _DisplayDeviceOptionsWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: ListView(
-      children: [
-        DisplayDeviceOptionsRowWidget(
-            title: "Data Collection Status",
-            onTap: _toggleExpanded,
-            imagePath: "assets/images/i_collection.png",
-            expanded: _isExpanded),
-        DataCollectionStatusWidget(
-          isExpanded: _isExpanded,
-          padding: paddingValue,
-          surveyStatus: "[Placeholder]",
-          vehicleCount: 0,
-          surveyStart: "[Placeholder]",
-          memory: "[Placeholder]",
-        ),
-        Visibility(
-          visible: _isExpanded,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
-        DisplayDeviceOptionsRowWidget(
-            title: "Real Time Traffic",
-            onTap: _toggleExpanded2,
-            imagePath: "assets/images/i_operation.png",
-            expanded: _isExpanded2),
+    return Expanded(child:
+        Consumer<DataByteManager>(builder: (context, dataByteManager, _) {
+      return ListView(
+        children: [
+          DisplayDeviceOptionsRowWidget(
+              title: "Data Collection Status",
+              onTap: _toggleExpanded,
+              imagePath: "assets/images/i_collection.png",
+              expanded: _isExpanded),
+          DataCollectionStatusWidget(
+            isExpanded: _isExpanded,
+            padding: paddingValue,
+            surveyStatus: "[Placeholder]",  
+            vehicleCount: 0,
+            surveyStart: "[Placeholder]",
+            memory: "[Placeholder]",
+          ),
+          Visibility(
+            visible: _isExpanded,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
+          DisplayDeviceOptionsRowWidget(
+              title: "Real Time Traffic",
+              onTap: _toggleExpanded2,
+              imagePath: "assets/images/i_operation.png",
+              expanded: _isExpanded2),
 
-        realTimeTrafficWidget(
-            isExpanded: _isExpanded2,
-            padding: paddingValue2,
-            peakSpeed: 0,
-            direction: "[Placeholder]",
-            distanceTracked: "[Placeholder]"),
-        Visibility(
-          visible: _isExpanded2,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
+          realTimeTrafficWidget(
+              isExpanded: _isExpanded2,
+              padding: paddingValue2,
+              peakSpeed: 0,
+              direction: "[Placeholder]",
+              distanceTracked: "[Placeholder]"),
+          Visibility(
+            visible: _isExpanded2,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
 
-        DisplayDeviceOptionsRowWidget(
-          title: "Device Status",
-          onTap: _toggleExpanded3,
-          imagePath: "assets/images/i_status.png",
-          expanded: _isExpanded3,
-        ),
+          DisplayDeviceOptionsRowWidget(
+            title: "Device Status",
+            onTap: _toggleExpanded3,
+            imagePath: "assets/images/i_status.png",
+            expanded: _isExpanded3,
+          ),
 
-        deviceStatusWidget(
-          isExpanded: _isExpanded3,
-          padding: paddingValue3,
-          date: "[Date Placeholder]",
-          location: "[Placeholder]",
-          latitude: "[Placeholder]",
-          longitude: "[Placeholder]",
-          facingDirection: "[Placeholder]",
-        ),
+          deviceStatusWidget(
+            isExpanded: _isExpanded3,
+            padding: paddingValue3,
+            date: "[Date Placeholder]",
+            location: "[Placeholder]",
+            latitude: "[Placeholder]",
+            longitude: "[Placeholder]",
+            facingDirection: "[Placeholder]",
+          ),
 
-        Visibility(
-          visible: _isExpanded3,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
-        DisplayDeviceOptionsRowWidget(
-            title: "Battery Status",
-            onTap: _toggleExpanded4,
-            imagePath: "assets/images/battery.png",
-            expanded: _isExpanded4),
-        BatteryStatusWidget(
-          isExpanded: _isExpanded4,
-          padding: paddingValue4,
-          days: 0.0,
-        ),
-        Visibility(
-          visible: _isExpanded4,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
-        DisplayDeviceOptionsRowWidget(
-          title: "Device Configuration",
-          onTap: _toggleExpanded6,
-          imagePath: "assets/images/i_setting.png",
-          expanded: _isExpanded6,
-        ),
-        DeviceConfigurationWidget(
-          isExpanded: _isExpanded6,
-          padding: paddingValue6,
-        ),
-        Visibility(
-          visible: _isExpanded6,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
-        DisplayDeviceOptionsRowWidget(
-          title: "Survey Schedule",
-          onTap: _toggleExpanded5,
-          imagePath: "assets/images/i_configuration.png",
-          expanded: _isExpanded5,
-        ),
-        SurveyScheduleWidget(
-          isExpanded: _isExpanded5,
-          padding: paddingValue5,
-          startTime1: "[00:00]",
-          startTime2: "[00:00]",
-          startTime3: "[00:00]",
-          startTime4: "[00:00]",
-          stopTime1: "[00:00]",
-          stopTime2: "[00:00]",
-          stopTime3: "[00:00]",
-          stopTime4: "[00:00]",
-        ),
-        Visibility(
-          visible: _isExpanded5,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
-        DisplayDeviceOptionsRowWidget(
-            title: "Device Information",
-            onTap: _toggleExpanded7,
-            imagePath: "assets/images/i_information.png",
-            expanded: _isExpanded7),
-        DeviceInformationWidget(
-            isExpanded: _isExpanded7,
-            padding: paddingValue7,
-            serialNumber: "[Placeholder]",
-            firmwareVersion: "[Placeholder]",
-            hardwareVersion: "[Placeholder]"),
-        Visibility(
-          visible: _isExpanded7,
-          child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
-        ),
-        DisplayDeviceOptionsRowWidget(
-            title: "Diagnostic",
-            onTap: () => _showModal(context),
-            imagePath: "assets/images/i_test.png",
-            expanded: _isExpanded9),
+          Visibility(
+            visible: _isExpanded3,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
+          DisplayDeviceOptionsRowWidget(
+              title: "Battery Status",
+              onTap: _toggleExpanded4,
+              imagePath: "assets/images/battery.png",
+              expanded: _isExpanded4),
+          BatteryStatusWidget(
+            isExpanded: _isExpanded4,
+            padding: paddingValue4,
+            days: 0.0,
+          ),
+          Visibility(
+            visible: _isExpanded4,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
+          DisplayDeviceOptionsRowWidget(
+            title: "Device Configuration",
+            onTap: _toggleExpanded6,
+            imagePath: "assets/images/i_setting.png",
+            expanded: _isExpanded6,
+          ),
+          DeviceConfigurationWidget(
+            isExpanded: _isExpanded6,
+            padding: paddingValue6,
+          ),
+          Visibility(
+            visible: _isExpanded6,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
+          DisplayDeviceOptionsRowWidget(
+            title: "Survey Schedule",
+            onTap: _toggleExpanded5,
+            imagePath: "assets/images/i_configuration.png",
+            expanded: _isExpanded5,
+          ),
+          SurveyScheduleWidget(
+            isExpanded: _isExpanded5,
+            padding: paddingValue5,
+            startTime1: "[00:00]",
+            startTime2: "[00:00]",
+            startTime3: "[00:00]",
+            startTime4: "[00:00]",
+            stopTime1: "[00:00]",
+            stopTime2: "[00:00]",
+            stopTime3: "[00:00]",
+            stopTime4: "[00:00]",
+          ),
+          Visibility(
+            visible: _isExpanded5,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
+          DisplayDeviceOptionsRowWidget(
+              title: "Device Information",
+              onTap: _toggleExpanded7,
+              imagePath: "assets/images/i_information.png",
+              expanded: _isExpanded7),
+          DeviceInformationWidget(
+              isExpanded: _isExpanded7,
+              padding: paddingValue7,
+              serialNumber: "[Placeholder]",
+              firmwareVersion: "[Placeholder]",
+              hardwareVersion: "[Placeholder]"),
+          Visibility(
+            visible: _isExpanded7,
+            child: Container(padding: const EdgeInsets.only(bottom: 16.0)),
+          ),
+          DisplayDeviceOptionsRowWidget(
+              title: "Diagnostic",
+              onTap: () => _showModal(context),
+              imagePath: "assets/images/i_test.png",
+              expanded: _isExpanded9),
 
-        DisplayDeviceOptionsRowWidget(
-            title: "About",
-            onTap: _toggleExpanded8,
-            imagePath: "assets/images/i_about.png",
-            expanded: _isExpanded8),
-        AboutWidget(
-          isExpanded: _isExpanded8,
-          padding: paddingValue8,
-          SD: "TDC 2",
-          version: "1.0",
-        )
-        // Add more Row widgets here if needed
-      ],
-    ));
+          DisplayDeviceOptionsRowWidget(
+              title: "About",
+              onTap: _toggleExpanded8,
+              imagePath: "assets/images/i_about.png",
+              expanded: _isExpanded8),
+          AboutWidget(
+            isExpanded: _isExpanded8,
+            padding: paddingValue8,
+            SD: "TDC 2",
+            version: "1.0",
+          )
+          // Add more Row widgets here if needed
+        ],
+      );
+    }));
   }
 
   void _showModal(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'Data_Byte_Manager.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
@@ -13,7 +14,14 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  runApp(const MyApp());
+  runApp( 
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DataByteManager()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

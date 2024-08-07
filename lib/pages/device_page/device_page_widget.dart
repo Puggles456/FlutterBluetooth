@@ -25,6 +25,7 @@ class DevicePageWidget extends StatefulWidget {
   final String? deviceId;
   final int? deviceRssi;
   final bool? hasWriteCharacteristic;
+  
 
   @override
   State<DevicePageWidget> createState() => _DevicePageWidgetState();
@@ -32,7 +33,7 @@ class DevicePageWidget extends StatefulWidget {
 
 class _DevicePageWidgetState extends State<DevicePageWidget> {
   late DevicePageModel _model;
-
+ 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -325,6 +326,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                   ),
                 ),
                  Container(padding: const EdgeInsets.only(top: 24.0)),
+                
                 DisplayDeviceOptionsWidget() // Replace displayDeviceOptionsModal with a valid widget
                     
               ],

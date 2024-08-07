@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -12,11 +13,15 @@ import 'dart:async';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../Data_Byte_Manager.dart';
+
 
 class DisplayReceivedDataWidget extends StatefulWidget {
-  const DisplayReceivedDataWidget({
+  
+  DisplayReceivedDataWidget({
     super.key,
     this.device,
+
   });
 
   final BTDeviceStruct? device;
@@ -29,6 +34,7 @@ class DisplayReceivedDataWidget extends StatefulWidget {
 class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
   late DisplayReceivedDataModel _model;
   late StreamSubscription<Uint8List> _dataSubscription;
+  
   final StreamController<Uint8List> _dataStreamController =
       StreamController<Uint8List>.broadcast();
   //final StreamController<Uint8List> _dataStreamController = StreamController<Uint8List>().broadcast();
@@ -83,6 +89,8 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
         print("Received data: $data");
+        Provider.of<DataByteManager>(context, listen: false).setData(data);
+        
         // final hexString = dataToHexString(data);
         //writeBytesToFile(data);
         //final uncompressedData = parseCompressedData(data);
