@@ -48,12 +48,15 @@ class _DisplayDeviceOptionsWidgetState
   void initState() {
     super.initState();
     _model = displayDeviceOptionsModal();
+   
   }
 
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
     _model.onUpdate();
+    
+    
   }
 
   void _toggleExpanded() {
@@ -169,7 +172,7 @@ class _DisplayDeviceOptionsWidgetState
           deviceStatusWidget(
             isExpanded: _isExpanded3,
             padding: paddingValue3,
-            date: "[Date Placeholder]",
+            date: DateTime.now(),
             location: "[Placeholder]",
             latitude: "[Placeholder]",
             longitude: "[Placeholder]",

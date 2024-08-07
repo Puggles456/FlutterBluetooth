@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class deviceStatusWidget extends StatefulWidget {
   bool isExpanded;
   double padding;
-  String date;
+  DateTime date;
   String location;
   String latitude;
   String longitude;
@@ -38,7 +38,7 @@ class _deviceStatusWidgetState extends State<deviceStatusWidget> {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        widget.date,
+                        widget.date.toString().split(".")[0], // Add the date
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                               fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.of(context).primaryText,
