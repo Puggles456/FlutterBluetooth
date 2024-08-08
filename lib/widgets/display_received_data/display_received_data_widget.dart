@@ -34,10 +34,9 @@ class DisplayReceivedDataWidget extends StatefulWidget {
 class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
   late DisplayReceivedDataModel _model;
   late StreamSubscription<Uint8List> _dataSubscription;
-  
   final StreamController<Uint8List> _dataStreamController =
       StreamController<Uint8List>.broadcast();
-  //final StreamController<Uint8List> _dataStreamController = StreamController<Uint8List>().broadcast();
+
   int totalUncompressedSize = 0;
   double _speed = 0.0;
   int _totalSize = 0;
@@ -53,8 +52,9 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => DisplayReceivedDataModel());
-
+    print("INITIALIZING");
     requestPermissions();
+   
 
     //adruino boot loader
     //service uuid: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
@@ -110,9 +110,11 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
 
   @override
   void dispose() {
+    print("LEAVINGGGGG");
     _model.maybeDispose();
     _dataSubscription.cancel();
     _dataStreamController.close();
+   
     super.dispose();
   }
 

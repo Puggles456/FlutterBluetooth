@@ -7,6 +7,7 @@ import 'SubSystem_Id_t.dart';
 import 'TDCCommandId.dart';
 import 'index.dart'; // Imports other custom actions
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -26,27 +27,30 @@ Future<void> TDC_receive_data(
     for (BluetoothService service in services) {
       if (service.uuid == Guid(serviceUuid)) {
         // Check for write characteristic
-        for (BluetoothCharacteristic characteristic in service.characteristics) {
+        for (BluetoothCharacteristic characteristic
+            in service.characteristics) {
           final isWrite = characteristic.properties.write;
           if (isWrite && characteristic.uuid == Guid(characteristicWriteUuid)) {
             debugPrint('Found write characteristic: ${characteristic.uuid}');
             hasWriteCharacteristic = true;
-
             // Send the command
             await sendCommand(characteristic);
-
             break; // Exit loop once the write characteristic is found
           }
         }
 
         // Set up notifications
-        for (BluetoothCharacteristic characteristic in service.characteristics) {
+        for (BluetoothCharacteristic characteristic
+            in service.characteristics) {
           if (characteristic.uuid == Guid(characteristicNotifyUuid) &&
               characteristic.properties.notify) {
             debugPrint("LISTENING TO DATA");
-            await characteristic.setNotifyValue(true);
+            //await characteristic.setNotifyValue(false); // Turn off notifications
+            //await Future.delayed(Duration(milliseconds: 500)); // Wait a moment
 
+            await characteristic.setNotifyValue(true);
             characteristic.value.listen((value) {
+              
               if (!dataStreamController.isClosed) {
                 final data = Uint8List.fromList(value);
                 dataStreamController.add(data);
@@ -57,8 +61,11 @@ Future<void> TDC_receive_data(
               } else {
                 debugPrint('StreamController is closed, cannot add new data.');
               }
+              
               //return;
             });
+            
+            print("LISTENING");
           }
         }
       }
@@ -69,6 +76,7 @@ Future<void> TDC_receive_data(
 }
 
 Future<void> sendCommand(BluetoothCharacteristic characteristic) async {
+  Uint8List list = Uint8List.fromList([0x01, 0x00]);
   try {
     // Format the message
     final commandData = ACFormatPacketProtocol.formatMessage(
