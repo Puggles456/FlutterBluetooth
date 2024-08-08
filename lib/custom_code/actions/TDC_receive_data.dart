@@ -21,55 +21,64 @@ Future<void> TDC_receive_data(
 ) async {
   try {
     final device = BluetoothDevice.fromId(deviceInfo.id);
-    var hasWriteCharacteristic = false;
-
     final services = await device.discoverServices();
+    int check = 0;
+
+    BluetoothService? targetService;
+    BluetoothCharacteristic? writeCharacteristic;
+    BluetoothCharacteristic? notifyCharacteristic;
+
+    // Find the target service and characteristics
     for (BluetoothService service in services) {
       if (service.uuid == Guid(serviceUuid)) {
-        // Check for write characteristic
-        for (BluetoothCharacteristic characteristic
-            in service.characteristics) {
-          final isWrite = characteristic.properties.write;
-          if (isWrite && characteristic.uuid == Guid(characteristicWriteUuid)) {
-            debugPrint('Found write characteristic: ${characteristic.uuid}');
-            hasWriteCharacteristic = true;
-            // Send the command
-            await sendCommand(characteristic);
-            break; // Exit loop once the write characteristic is found
-          }
-        }
+        targetService = service;
 
-        // Set up notifications
         for (BluetoothCharacteristic characteristic
             in service.characteristics) {
+          if (characteristic.uuid == Guid(characteristicWriteUuid) &&
+              characteristic.properties.write) {
+            writeCharacteristic = characteristic;
+          }
           if (characteristic.uuid == Guid(characteristicNotifyUuid) &&
               characteristic.properties.notify) {
-            debugPrint("LISTENING TO DATA");
-            //await characteristic.setNotifyValue(false); // Turn off notifications
-            //await Future.delayed(Duration(milliseconds: 500)); // Wait a moment
-
-            await characteristic.setNotifyValue(true);
-            characteristic.value.listen((value) {
-              
-              if (!dataStreamController.isClosed) {
-                final data = Uint8List.fromList(value);
-                dataStreamController.add(data);
-
-                if (dataCallBack != null) {
-                  dataCallBack(data);
-                }
-              } else {
-                debugPrint('StreamController is closed, cannot add new data.');
-              }
-              
-              //return;
-            });
-            
-            print("LISTENING");
+            notifyCharacteristic = characteristic;
           }
         }
       }
     }
+
+    // Handle write characteristic
+    /*
+    if (writeCharacteristic != null) {
+      debugPrint('Found write characteristic: ${writeCharacteristic.uuid}');
+      await sendCommand(writeCharacteristic);
+    }
+    */
+
+    // Handle notify characteristic
+    if (notifyCharacteristic != null) {
+      debugPrint("LISTENING TO DATA");
+      await notifyCharacteristic.setNotifyValue(true);
+      notifyCharacteristic.value.listen((value) {
+        if (!dataStreamController.isClosed) {
+          check = 1;
+          final data = Uint8List.fromList(value);
+          dataStreamController.add(data);
+
+          if (dataCallBack != null) {
+            dataCallBack(data);
+          }
+        } else {
+          debugPrint('StreamController is closed, cannot add new data.');
+        }
+      });
+
+      
+    }
+    if(writeCharacteristic != null && check == 0){
+      await sendCommand(writeCharacteristic);
+    }
+    print("OUTSIDE LOGIC");
   } catch (e) {
     debugPrint("PROBLEM " + e.toString());
   }
