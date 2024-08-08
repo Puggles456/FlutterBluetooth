@@ -6,12 +6,12 @@
 #endif
 
 // BLE Service
-BLEService customService = BLEService(0x1234);
-BLECharacteristic char1 = BLECharacteristic(0x2345);
-BLECharacteristic char2 = BLECharacteristic(0x3456);
-BLECharacteristic char3 = BLECharacteristic(0x4567);
+BLEService customService = BLEService("12345678-1234-5678-1234-56789abcdef0");
+BLECharacteristic char1 = BLECharacteristic("23456789-2345-6789-2345-6789abcdef1");
+BLECharacteristic char2 = BLECharacteristic("3456789a-3456-789a-3456-789abcdef234");
+BLECharacteristic char3 = BLECharacteristic("456789ab-4567-89ab-4567-89abcdef3456");
 
-const int chunkSize = 185; // Adjusted to 185 bytes to fit within MTU limitations
+const int chunkSize = 240; // Adjusted to 185 bytes to fit within MTU limitations
 
 void setup() {
   Serial.begin(921600);
