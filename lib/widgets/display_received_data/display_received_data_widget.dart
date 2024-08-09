@@ -76,6 +76,7 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
         */
 
       TDC.TDC_receive_data(
+        context,
         widget.device!,
         "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
         "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
@@ -89,7 +90,7 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
       // Listen to the data stream and update state
       _dataSubscription = _dataStreamController.stream.listen((data) {
         print("Received data: $data");
-        Provider.of<DataByteManager>(context, listen: false).setData(data);
+       // Provider.of<DataByteManager>(context, listen: false).setData(data);
         
         // final hexString = dataToHexString(data);
         //writeBytesToFile(data);
@@ -110,11 +111,9 @@ class _DisplayReceivedDataWidgetState extends State<DisplayReceivedDataWidget> {
 
   @override
   void dispose() {
-    print("LEAVINGGGGG");
     _model.maybeDispose();
     _dataSubscription.cancel();
     _dataStreamController.close();
-   
     super.dispose();
   }
 

@@ -29,7 +29,9 @@ class DataByteManager extends ChangeNotifier {
     for (int i = 0; i < _data.length; i++) {
       if (_data[i] == DATE_FIRST && _data[i + 1] == DATE_LAST) {
     
-        dataType = data[i + 2] & 0xFF;
+        dataType = data[i + 2];
+
+        print("DATA TYPE: $dataType");
 
         int length = _data.length - i;
         Uint8List currentData = Uint8List(length);
