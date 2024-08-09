@@ -1,0 +1,43 @@
+# Flutter/Dart specific ignores
+build/
+.dart_tool/
+# Xcode specific ignores
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+**/*sync/
+.sconsign.dblite
+.tags*
+**/.vagrant/
+**/DerivedData/
+Icon?
+**/Pods/
+**/.symlinks/
+profile
+xcuserdata
+**/.generated/
+
+# Generated Flutter files
+ios
+./Flutter
+./App.framework
+./Flutter.framework
+./Flutter.podspec
+./Generated.xcconfig
+./app.flx
+./app.zip
+./flutter_assets/
+./flutter_export_environment.sh
+./Runner
+
+# Generated JSON files
+ServiceDefinitions.json
+Runner/GeneratedPluginRegistrant.*
+
+# Exceptions to above rules
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
